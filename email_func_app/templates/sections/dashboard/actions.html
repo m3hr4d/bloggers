@@ -1,0 +1,22 @@
+<!-- Quick Actions -->
+<div class="quick-actions">
+    {% if user_type == 'influencer' %}
+    <a href="{{ url_for('offers.create_plan') }}" class="action-button primary">
+        <i class="bi bi-plus-lg"></i>
+        ایجاد برنامه سفر جدید
+    </a>
+    <a href="#" class="action-button secondary">
+        <i class="bi bi-eye"></i>
+        مشاهده پیشنهادات
+    </a>
+    {% else %}
+    <a href="{{ url_for('main.search_plans') }}" class="action-button primary">
+        <i class="bi bi-search"></i>
+        جستجوی برنامه‌های سفر
+    </a>
+    <a href="#" class="action-button secondary">
+        <i class="bi bi-envelope"></i>
+        پیشنهادات ارسالی
+    </a>
+    {% endif %}
+</div>

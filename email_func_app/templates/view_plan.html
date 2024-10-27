@@ -1,0 +1,367 @@
+{% extends "base.html" %}
+
+{% block title %}مشاهده برنامه سفر{% endblock %}
+
+{% block dashboard_content %}
+<div class="view-plan-container">
+    <div class="plan-header">
+        <h1>{{ plan.destination }}</h1>
+        <div class="plan-status">
+            <span class="status-badge {{ plan.status }}">{{ plan.status }}</span>
+        </div>
+    </div>
+
+    {% if current_user.user_type == 'influencer' and plan.influencer_id == current_user.id %}
+    <div class="plan-actions">
+        {% if plan.can_edit() %}
+        <a href="{{ url_for('offers.edit_plan', plan_id=plan.id) }}" class="btn btn-primary">
+            <i class="bi bi-pencil"></i>
+            ویرایش برنامه
+        </a>
+        {% endif %}
+        
+        {% if plan.can_delete() %}
+        <form action="{{ url_for('offers.delete_plan', plan_id=plan.id) }}" method="POST" class="d-inline" onsubmit="return confirm('آیا از حذف این برنامه اطمینان دارید؟');">
+            <button type="submit" class="btn btn-danger">
+                <i class="bi bi-trash"></i>
+                حذف برنامه
+            </button>
+        </form>
+        {% endif %}
+
+        {% if not plan.can_edit() and plan.edit_count > 0 %}
+        <div class="alert alert-info">
+            <i class="bi bi-info-circle"></i>
+            این برنامه قبلاً ویرایش شده و دیگر قابل ویرایش نیست.
+        </div>
+        {% endif %}
+
+        {% if not plan.can_edit() and plan.offers|length > 0 %}
+        <div class="alert alert-info">
+            <i class="bi bi-info-circle"></i>
+            به دلیل وجود پیشنهاد برای این برنامه، امکان ویرایش وجود ندارد.
+        </div>
+        {% endif %}
+
+        {% if not plan.can_edit() and plan.status == STATUS_ACCEPTED %}
+        <div class="alert alert-success">
+            <i class="bi bi-check-circle"></i>
+            این برنامه پذیرفته شده و قابل ویرایش نیست.
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    <div class="plan-details">
+        <div class="detail-card">
+            <h3>جزئیات برنامه</h3>
+            <div class="detail-item">
+                <label>مقصد:</label>
+                <p>{{ plan.destination }}</p>
+            </div>
+            <div class="detail-item">
+                <label>موقعیت:</label>
+                <p>{{ plan.location }}</p>
+            </div>
+            <div class="detail-item">
+                <label>تاریخ:</label>
+                <p>{{ plan.start_date }} تا {{ plan.end_date }}</p>
+            </div>
+            {% if plan.time %}
+            <div class="detail-item">
+                <label>زمان:</label>
+                <p>{{ plan.time }}</p>
+            </div>
+            {% endif %}
+        </div>
+
+        {% if services %}
+        <div class="detail-card">
+            <h3>خدمات مورد نیاز</h3>
+            <div class="services-grid">
+                {% for service in services %}
+                <div class="service-item">
+                    <i class="bi bi-check-circle"></i>
+                    {{ service }}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        {% if plan.topics_of_interest %}
+        <div class="detail-card">
+            <h3>موضوعات مورد علاقه</h3>
+            <p>{{ plan.topics_of_interest }}</p>
+        </div>
+        {% endif %}
+    </div>
+
+    {% if current_user.user_type == 'business' and plan.status != STATUS_ACCEPTED %}
+    <div class="offer-section">
+        <a href="{{ url_for('offers.submit_offer', plan_id=plan.id) }}" class="btn btn-primary">
+            <i class="bi bi-send"></i>
+            ارسال پیشنهاد
+        </a>
+    </div>
+    {% endif %}
+
+    {% if offers %}
+    <div class="offers-section">
+        <h3>پیشنهادات دریافتی</h3>
+        <div class="offers-grid">
+            {% for offer in offers %}
+            <div class="offer-card">
+                <div class="offer-header">
+                    <h4>{{ offer.business.business_name }}</h4>
+                    <span class="status-badge {{ offer.status }}">{{ offer.status }}</span>
+                </div>
+                <div class="offer-content">
+                    <div class="offer-detail">
+                        <label>خدمات پیشنهادی:</label>
+                        <p>{{ offer.service_offered }}</p>
+                    </div>
+                    {% if offer.description %}
+                    <div class="offer-detail">
+                        <label>توضیحات:</label>
+                        <p>{{ offer.description }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+                {% if current_user.user_type == 'influencer' and offer.status == STATUS_UNDER_REVIEW %}
+                <div class="offer-actions">
+                    <a href="{{ url_for('offers.update_offer_status', offer_id=offer.id, status=STATUS_ACCEPTED) }}" 
+                       class="btn btn-success btn-sm"
+                       onclick="return confirm('آیا از پذیرش این پیشنهاد اطمینان دارید؟')">
+                        <i class="bi bi-check-lg"></i>
+                        پذیرش
+                    </a>
+                    <a href="{{ url_for('offers.update_offer_status', offer_id=offer.id, status=STATUS_REJECTED) }}"
+                       class="btn btn-danger btn-sm"
+                       onclick="return confirm('آیا از رد این پیشنهاد اطمینان دارید؟')">
+                        <i class="bi bi-x-lg"></i>
+                        رد
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+{% block extra_css %}
+<style>
+.view-plan-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.plan-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.plan-header h1 {
+    margin: 0;
+    color: var(--do-text);
+    font-size: 1.75rem;
+}
+
+.plan-actions {
+    margin-bottom: 2rem;
+}
+
+.plan-actions .btn {
+    margin-left: 1rem;
+}
+
+.detail-card {
+    background: white;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--do-border);
+}
+
+.detail-card h3 {
+    color: var(--do-text);
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.detail-item {
+    margin-bottom: 1rem;
+}
+
+.detail-item:last-child {
+    margin-bottom: 0;
+}
+
+.detail-item label {
+    color: var(--do-gray);
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+    display: block;
+}
+
+.detail-item p {
+    color: var(--do-text);
+    margin: 0;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+}
+
+.service-item {
+    background: var(--do-background);
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.service-item i {
+    color: var(--do-primary);
+    margin-left: 0.5rem;
+}
+
+.offers-section {
+    margin-top: 3rem;
+}
+
+.offers-section h3 {
+    color: var(--do-text);
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.offers-grid {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.offer-card {
+    background: white;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--do-border);
+}
+
+.offer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.offer-header h4 {
+    margin: 0;
+    color: var(--do-text);
+    font-size: 1.1rem;
+}
+
+.offer-content {
+    margin-bottom: 1.5rem;
+}
+
+.offer-detail {
+    margin-bottom: 1rem;
+}
+
+.offer-detail:last-child {
+    margin-bottom: 0;
+}
+
+.offer-detail label {
+    color: var(--do-gray);
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+    display: block;
+}
+
+.offer-detail p {
+    color: var(--do-text);
+    margin: 0;
+}
+
+.offer-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.status-badge {
+    padding: 0.4rem 0.8rem;
+    border-radius: 2rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.status-badge.در_حال_انتظار {
+    background: #fff8e1;
+    color: #f1c40f;
+}
+
+.status-badge.تایید_شده,
+.status-badge.پذیرفته_شده {
+    background: #e8f5e9;
+    color: #00b27f;
+}
+
+.status-badge.رد_شده {
+    background: #ffebee;
+    color: #ff4757;
+}
+
+.status-badge.در_انتظار_بررسی {
+    background: #e3f2fd;
+    color: #2196f3;
+}
+
+@media (max-width: 768px) {
+    .plan-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+
+    .plan-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .plan-actions .btn {
+        margin: 0;
+        width: 100%;
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .offer-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+    }
+
+    .offer-actions {
+        flex-direction: column;
+    }
+
+    .offer-actions .btn {
+        width: 100%;
+    }
+}
+</style>
+{% endblock %}

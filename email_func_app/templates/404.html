@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}صفحه مورد نظر یافت نشد{% endblock %}
+
+{% block marketing_content %}
+<section class="error-section py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center">
+                <h1 class="display-1 text-primary mb-4">404</h1>
+                <h2 class="mb-4">صفحه مورد نظر یافت نشد</h2>
+                <p class="mb-4">متأسفانه صفحه‌ای که به دنبال آن هستید وجود ندارد.</p>
+                <a href="{{ url_for('main.index') }}" class="btn btn-primary">
+                    <i class="bi bi-house"></i>
+                    بازگشت به صفحه اصلی
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.error-section {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+}
+
+.display-1 {
+    font-size: 6rem;
+    font-weight: 700;
+    color: #0069ff;
+}
+
+h2 {
+    color: #031b4e;
+}
+
+p {
+    color: #5c6a88;
+    font-size: 1.1rem;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #0069ff 0%, #0052cc 100%);
+    border: none;
+    padding: 0.75rem 1.75rem;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #0052cc 0%, #003d99 100%);
+    transform: translateY(-2px);
+}
+
+.bi {
+    margin-left: 0.5rem;
+}
+</style>
+{% endblock %}

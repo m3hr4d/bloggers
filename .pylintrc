@@ -1,0 +1,17 @@
+[MASTER]
+ignore=venv
+
+[MESSAGES CONTROL]
+disable=
+    C0114,  # Missing module docstring
+    C0116,  # Missing function or method docstring
+    W0511,  # TODO found
+    R0903,  # Too few public methods
+    E1101,  # No member (used for dynamic attributes)
+
+[TYPECHECK]
+ignored-modules=
+    alembic.context
+
+[REPORTS]
+output-format = colorized

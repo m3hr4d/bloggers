@@ -1,0 +1,28 @@
+<!-- Sidebar -->
+<nav id="sidebar" class="sidebar">
+    <div class="sidebar-header">
+        <h3>داشبورد</h3>
+    </div>
+    <ul class="list-unstyled components">
+        <li {% if request.endpoint == 'main.dashboard' %}class="active"{% endif %}>
+            <a href="{{ url_for('main.dashboard') }}">
+                <i class="bi bi-house-door"></i> خانه
+            </a>
+        </li>
+        <li {% if request.endpoint == 'main.profile' %}class="active"{% endif %}>
+            <a href="#">
+                <i class="bi bi-person"></i> پروفایل
+            </a>
+        </li>
+        <li {% if request.endpoint == 'main.stats' %}class="active"{% endif %}>
+            <a href="#">
+                <i class="bi bi-graph-up"></i> آمار
+            </a>
+        </li>
+        <li {% if request.endpoint == 'main.settings' %}class="active"{% endif %}>
+            <a href="{{ url_for('main.settings') }}">
+                <i class="bi bi-gear"></i> تنظیمات
+            </a>
+        </li>
+    </ul>
+</nav>

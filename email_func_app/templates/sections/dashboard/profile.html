@@ -1,0 +1,99 @@
+<!-- Content Grid -->
+<div class="content-grid">
+    <!-- Profile Card -->
+    <div class="content-card profile-card">
+        <div class="card-header">
+            <h2>پروفایل</h2>
+            <a href="{{ url_for('main.settings') }}" class="edit-link">
+                <i class="bi bi-pencil"></i>
+                ویرایش پروفایل
+            </a>
+        </div>
+        <div class="card-content">
+            <div class="profile-image">
+                <i class="bi bi-person-circle"></i>
+            </div>
+            <div class="profile-details">
+                <h3>{{ current_user.name or current_user.email }}</h3>
+                <p class="user-type">{{ 'کسب‌وکار' if user_type == 'business' else 'اینفلوئنسر' }}</p>
+                {% if user_type == 'influencer' %}
+                    <p class="instagram"><i class="bi bi-instagram"></i> {{ current_user.instagram_profile or 'تنظیم نشده' }}</p>
+                    <p class="specialty"><i class="bi bi-bookmark-star"></i> {{ current_user.niche or 'تنظیم نشده' }}</p>
+                {% else %}
+                    <p class="business-name"><i class="bi bi-building"></i> {{ current_user.business_name or 'تنظیم نشده' }}</p>
+                    <p class="website"><i class="bi bi-globe"></i> {{ current_user.business_website or 'تنظیم نشده' }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Active Plans/Offers -->
+    <div class="content-card wide-card">
+        <div class="card-header">
+            <h2>{{ 'برنامه‌های فعال' if user_type == 'influencer' else 'پیشنهادات اخیر' }}</h2>
+        </div>
+        <div class="card-content">
+            {% if user_type == 'influencer' and plans %}
+                <div class="table-responsive">
+                    <table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th>مقصد</th>
+                                <th>تاریخ</th>
+                                <th>وضعیت</th>
+                                <th>پیشنهادات</th>
+                                <th>عملیات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for plan in plans %}
+                            <tr>
+                                <td>{{ plan.destination }}</td>
+                                <td>{{ plan.start_date }} تا {{ plan.end_date }}</td>
+                                <td><span class="status-badge {{ plan.status }}">{{ plan.status }}</span></td>
+                                <td>{{ plan.offers|length }}</td>
+                                <td>
+                                    <a href="{{ url_for('offers.view_plan', plan_id=plan.id) }}" class="action-link">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% elif user_type == 'business' and offers %}
+                <div class="table-responsive">
+                    <table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th>اینفلوئنسر</th>
+                                <th>برنامه سفر</th>
+                                <th>وضعیت</th>
+                                <th>تاریخ ارسال</th>
+                                <th>عملیات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for offer in offers %}
+                            <tr>
+                                <td>{{ offer.plan.influencer.name }}</td>
+                                <td>{{ offer.plan.destination }}</td>
+                                <td><span class="status-badge {{ offer.status }}">{{ offer.status }}</span></td>
+                                <td>{{ offer.created_at }}</td>
+                                <td>
+                                    <a href="{{ url_for('offers.view_offer', offer_id=offer.id) }}" class="action-link">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <p class="no-data">موردی برای نمایش وجود ندارد</p>
+            {% endif %}
+        </div>
+    </div>
+</div>

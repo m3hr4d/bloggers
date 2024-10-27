@@ -1,0 +1,60 @@
+<div class="info-section">
+    <div class="info-card">
+        <div class="info-header">
+            <div class="info-avatar">
+                <i class="bi bi-person-circle"></i>
+            </div>
+            <div class="info-title">
+                <h2>{{ current_user.name or current_user.email }}</h2>
+                <span class="info-badge">{{ 'کسب‌وکار' if user_type == 'business' else 'اینفلوئنسر' }}</span>
+            </div>
+        </div>
+
+        <div class="info-content">
+            <div class="info-group">
+                <label>ایمیل</label>
+                <p>{{ current_user.email }}</p>
+            </div>
+
+            {% if user_type == 'influencer' %}
+            <div class="info-group">
+                <label>پروفایل اینستاگرام</label>
+                <p>{{ current_user.instagram_profile or 'تنظیم نشده' }}</p>
+            </div>
+            <div class="info-group">
+                <label>تعداد دنبال‌کنندگان</label>
+                <p>{{ current_user.followers or 'تنظیم نشده' }}</p>
+            </div>
+            <div class="info-group">
+                <label>حوزه فعالیت</label>
+                <p>{{ current_user.niche or 'تنظیم نشده' }}</p>
+            </div>
+            {% else %}
+            <div class="info-group">
+                <label>نام کسب‌وکار</label>
+                <p>{{ current_user.business_name or 'تنظیم نشده' }}</p>
+            </div>
+            <div class="info-group">
+                <label>وب‌سایت</label>
+                <p>{{ current_user.business_website or 'تنظیم نشده' }}</p>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="info-footer">
+            <div class="info-stats">
+                {% if user_type == 'influencer' %}
+                <div class="stat-item">
+                    <span class="stat-value">{{ active_plans|length if active_plans else '۰' }}</span>
+                    <span class="stat-label">برنامه‌های فعال</span>
+                </div>
+                {% else %}
+                <div class="stat-item">
+                    <span class="stat-value">{{ offers|length if offers else '۰' }}</span>
+                    <span class="stat-label">پیشنهادات ارسالی</span>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

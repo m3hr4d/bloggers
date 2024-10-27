@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}خطای سرور داخلی{% endblock %}
+
+{% block marketing_content %}
+<section class="error-section py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center">
+                <h1 class="display-1 text-danger mb-4">500</h1>
+                <h2 class="mb-4">خطای سرور داخلی</h2>
+                <p class="mb-4">متأسفانه خطایی رخ داده است. لطفاً بعداً مجدداً تلاش کنید.</p>
+                <a href="{{ url_for('main.index') }}" class="btn btn-primary">بازگشت به صفحه اصلی</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.error-section {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+}
+
+.display-1 {
+    font-size: 6rem;
+    font-weight: 700;
+    color: #dc3545;
+}
+
+h2 {
+    color: #031b4e;
+}
+
+p {
+    color: #5c6a88;
+    font-size: 1.1rem;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #0069ff 0%, #0052cc 100%);
+    border: none;
+    padding: 0.75rem 1.75rem;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #0052cc 0%, #003d99 100%);
+    transform: translateY(-2px);
+}
+</style>
+{% endblock %}

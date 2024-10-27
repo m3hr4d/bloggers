@@ -1,0 +1,55 @@
+<!-- Stats Section -->
+<div class="stats-section">
+    <div class="welcome-card">
+        <h1>خوش آمدید، {{ current_user.name or current_user.email }}</h1>
+        <p>{{ 'مدیریت کمپین‌های تبلیغاتی و همکاری با اینفلوئنسرها' if user_type == 'business' else 'مدیریت سفرها و همکاری با برندها' }}</p>
+    </div>
+    
+    <div class="stats-grid">
+        {% if user_type == 'influencer' %}
+        <div class="stat-card">
+            <i class="bi bi-people-fill"></i>
+            <div class="stat-info">
+                <h3>دنبال‌کنندگان</h3>
+                <p>{{ current_user.followers or '۰' }}</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <i class="bi bi-graph-up"></i>
+            <div class="stat-info">
+                <h3>نرخ تعامل</h3>
+                <p>{{ current_user.engagement_rate or '۰' }}%</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <i class="bi bi-calendar-check"></i>
+            <div class="stat-info">
+                <h3>برنامه‌های فعال</h3>
+                <p>{{ active_plans|length if active_plans else '۰' }}</p>
+            </div>
+        </div>
+        {% else %}
+        <div class="stat-card">
+            <i class="bi bi-briefcase-fill"></i>
+            <div class="stat-info">
+                <h3>پیشنهادات ارسالی</h3>
+                <p>{{ offers|length if offers else '۰' }}</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <i class="bi bi-check-circle-fill"></i>
+            <div class="stat-info">
+                <h3>همکاری‌های موفق</h3>
+                <p>{{ successful_collaborations|length if successful_collaborations else '۰' }}</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <i class="bi bi-star-fill"></i>
+            <div class="stat-info">
+                <h3>امتیاز کسب‌وکار</h3>
+                <p>۵.۰</p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>

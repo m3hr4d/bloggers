@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>جستجوی برنامه‌های سفر</h2>
+    <form method="POST" action="{{ url_for('offers.search_plans') }}">
+        <!-- Location Field -->
+        <div class="mb-3">
+            <label for="location" class="form-label">مکان</label>
+            <div class="input-group">
+                <input type="text" class="form-control" id="location" name="location" placeholder="مکان مورد نظر را وارد کنید">
+                <span class="input-group-text" data-bs-toggle="tooltip" title="لطفاً مکانی که می‌خواهید برنامه‌های سفر مربوط به آن را ببینید وارد کنید. (مثال: تهران، اصفهان)">
+                    <i class="bi bi-question-circle"></i>
+                </span>
+            </div>
+        </div>
+        <!-- Topics of Interest Field -->
+        <div class="mb-3">
+            <label for="topics" class="form-label">موضوعات مورد علاقه</label>
+            <div class="input-group">
+                <input type="text" class="form-control" id="topics" name="topics" placeholder="موضوعات مورد علاقه را وارد کنید">
+                <span class="input-group-text" data-bs-toggle="tooltip" title="موضوعاتی که به آن‌ها علاقه‌مند هستید را وارد کنید تا برنامه‌های مرتبط را ببینید. (مثال: طبیعت، فرهنگ)">
+                    <i class="bi bi-question-circle"></i>
+                </span>
+            </div>
+        </div>
+        <!-- Start Date Field -->
+        <div class="mb-3">
+            <label for="start_date" class="form-label">تاریخ شروع</label>
+            <div class="input-group">
+                <input type="date" class="form-control" id="start_date" name="start_date">
+                <span class="input-group-text" data-bs-toggle="tooltip" title="تاریخ شروع بازه زمانی که می‌خواهید برنامه‌های سفر را در آن ببینید وارد کنید.">
+                    <i class="bi bi-question-circle"></i>
+                </span>
+            </div>
+        </div>
+        <!-- End Date Field -->
+        <div class="mb-3">
+            <label for="end_date" class="form-label">تاریخ پایان</label>
+            <div class="input-group">
+                <input type="date" class="form-control" id="end_date" name="end_date">
+                <span class="input-group-text" data-bs-toggle="tooltip" title="تاریخ پایان بازه زمانی که می‌خواهید برنامه‌های سفر را در آن ببینید وارد کنید.">
+                    <i class="bi bi-question-circle"></i>
+                </span>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">جستجو</button>
+    </form>
+
+    {% if search_results %}
+        <h3 class="mt-5">نتایج جستجو</h3>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>اینفلوئنسر</th>
+                        <th>مقصد</th>
+                        <th>موقعیت</th>
+                        <th>تاریخ شروع</th>
+                        <th>تاریخ پایان</th>
+                        <th>موضوعات مورد علاقه</th>
+                        <th>مشاهده جزئیات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for plan in search_results %}
+                    <tr>
+                        <td>{{ plan.influencer.name }}</td>
+                        <td>{{ plan.destination }}</td>
+                        <td>{{ plan.location }}</td>
+                        <td>{{ plan.start_date }}</td>
+                        <td>{{ plan.end_date }}</td>
+                        <td>{{ plan.topics_of_interest }}</td>
+                        <td>
+                            <a href="{{ url_for('offers.view_plan', plan_id=plan.id) }}" class="btn btn-sm btn-primary">مشاهده</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% elif request.method == 'POST' %}
+        <p class="mt-5">هیچ نتیجه‌ای یافت نشد.</p>
+    {% endif %}
+</div>
+
+<!-- Include Bootstrap JS for tooltips -->
+<script>
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+</script>
+{% endblock %}

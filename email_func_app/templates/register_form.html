@@ -1,0 +1,114 @@
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow-lg border-0 rounded-lg">
+            <div class="card-header bg-primary text-white text-center py-4">
+                <h2 class="fs-4 fw-bold m-0 text-white">ایجاد حساب کاربری جدید</h2>
+            </div>
+            <div class="card-body p-4 p-md-5">
+                {% for category, message in get_flashed_messages(with_categories=True) %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="بستن"></button>
+                    </div>
+                {% endfor %}
+                <form method="post" id="registration-form" enctype="multipart/form-data">
+                    {{ form.hidden_tag() }}
+
+                    <!-- Email Field -->
+                    <div class="form-floating mb-3">
+                        {{ form.email(class="form-control", id="email", placeholder="ایمیل") }}
+                        <label for="email" class="required">آدرس ایمیل</label>
+                        {% if form.email.errors %}
+                            <div class="invalid-feedback d-block">{{ form.email.errors[0] }}</div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Password Field -->
+                    <div class="form-floating mb-3">
+                        {{ form.password(class="form-control", id="password", placeholder="رمز عبور") }}
+                        <label for="password" class="required">رمز عبور</label>
+                        {% if form.password.errors %}
+                            <div class="invalid-feedback d-block">{{ form.password.errors[0] }}</div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Confirm Password Field -->
+                    <div class="form-floating mb-3">
+                        {{ form.confirm_password(class="form-control", id="confirm_password", placeholder="تأیید رمز عبور") }}
+                        <label for="confirm_password" class="required">تأیید رمز عبور</label>
+                        {% if form.confirm_password.errors %}
+                            <div class="invalid-feedback d-block">{{ form.confirm_password.errors[0] }}</div>
+                        {% endif %}
+                    </div>
+
+                    <!-- User Type Field -->
+                    <div class="form-floating mb-3">
+                        {{ form.user_type(class="form-select", id="user_type") }}
+                        <label for="user_type" class="required">نوع کاربر</label>
+                        {% if form.user_type.errors %}
+                            <div class="invalid-feedback d-block">{{ form.user_type.errors[0] }}</div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Avatar Upload Field -->
+                    <div class="mb-3">
+                        <label for="{{ form.avatar.id }}" class="form-label" id="avatar_label">تصویر پروفایل</label>
+                        {{ form.avatar(class="form-control") }}
+                        {% if form.avatar.errors %}
+                            <div class="invalid-feedback d-block">{{ form.avatar.errors[0] }}</div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Business Fields -->
+                    <div class="additional-fields" id="business-fields" style="display:none;">
+                        <div class="form-floating mb-3">
+                            {{ form.business_name(class="form-control", id="business_name", placeholder="نام کسب‌وکار") }}
+                            <label for="business_name" class="required">نام کسب‌وکار</label>
+                            {% if form.business_name.errors %}
+                                <div class="invalid-feedback d-block">{{ form.business_name.errors[0] }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="form-floating mb-3">
+                            {{ form.business_website(class="form-control", id="business_website", placeholder="وب‌سایت کسب‌وکار") }}
+                            <label for="business_website">وب‌سایت کسب‌وکار</label>
+                            {% if form.business_website.errors %}
+                                <div class="invalid-feedback d-block">{{ form.business_website.errors[0] }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Influencer Fields -->
+                    <div class="additional-fields" id="influencer-fields" style="display:none;">
+                        <div class="form-floating mb-3">
+                            {{ form.influencer_social_media(class="form-control", id="influencer_social_media", placeholder="حساب شبکه اجتماعی") }}
+                            <label for="influencer_social_media" class="required">حساب شبکه اجتماعی اصلی</label>
+                            {% if form.influencer_social_media.errors %}
+                                <div class="invalid-feedback d-block">{{ form.influencer_social_media.errors[0] }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="form-floating mb-3">
+                            {{ form.influencer_followers(class="form-control", id="influencer_followers", placeholder="تعداد دنبال‌کنندگان") }}
+                            <label for="influencer_followers">تعداد دنبال‌کنندگان</label>
+                            {% if form.influencer_followers.errors %}
+                                <div class="invalid-feedback d-block">{{ form.influencer_followers.errors[0] }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="form-floating mb-3">
+                            {{ form.basic_profile_info(class="form-control", id="basic_profile_info", placeholder="اطلاعات پایه پروفایل", style="height: 100px") }}
+                            <label for="basic_profile_info" class="required">اطلاعات پایه پروفایل</label>
+                            {% if form.basic_profile_info.errors %}
+                                <div class="invalid-feedback d-block">{{ form.basic_profile_info.errors[0] }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary btn-lg w-100 mt-3">ثبت‌نام</button>
+                </form>
+            </div>
+            <div class="card-footer text-center py-3">
+                <p class="mb-0">قبلاً عضو شده‌اید؟ <a href="{{ url_for('auth.login') }}" class="text-primary">ورود به حساب کاربری</a></p>
+            </div>
+        </div>
+    </div>
+</div>

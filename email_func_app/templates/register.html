@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block title %}ثبت نام - بلاگرز{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-box">
+        <h1>ثبت نام در بلاگرز</h1>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <div class="user-type-selector">
+            <div class="type-option" data-type="influencer">
+                <i class="bi bi-person-badge"></i>
+                <span>اینفلوئنسر</span>
+            </div>
+            <div class="type-option" data-type="business">
+                <i class="bi bi-shop"></i>
+                <span>کسب و کار</span>
+            </div>
+        </div>
+        
+        <form method="POST" action="{{ url_for('auth.register') }}" id="influencer-form" class="register-form">
+            <input type="hidden" name="user_type" value="influencer">
+            <div class="form-group">
+                <label for="email" class="form-label">ایمیل</label>
+                <input type="email" name="email" id="email" class="form-control" placeholder="example@email.com" required>
+            </div>
+            <div class="form-group">
+                <label for="password" class="form-label">رمز عبور</label>
+                <input type="password" name="password" id="password" class="form-control" placeholder="رمز عبور خود را وارد کنید" required>
+            </div>
+            <div class="form-group">
+                <label for="name" class="form-label">نام و نام خانوادگی</label>
+                <input type="text" name="name" id="name" class="form-control" placeholder="نام و نام خانوادگی خود را وارد کنید" required>
+            </div>
+            <div class="form-group">
+                <label for="instagram" class="form-label">نام کاربری اینستاگرام</label>
+                <div class="input-group">
+                    <span class="input-group-text">@</span>
+                    <input type="text" name="instagram" id="instagram" class="form-control" placeholder="نام کاربری اینستاگرام">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="followers" class="form-label">تعداد دنبال‌کنندگان</label>
+                <input type="number" name="followers" id="followers" class="form-control" placeholder="تعداد دنبال‌کنندگان">
+            </div>
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary">ثبت نام به عنوان اینفلوئنسر</button>
+            </div>
+        </form>
+
+        <form method="POST" action="{{ url_for('auth.register') }}" id="business-form" class="register-form" style="display: none;">
+            <input type="hidden" name="user_type" value="business">
+            <div class="form-group">
+                <label for="business-email" class="form-label">ایمیل شرکت</label>
+                <input type="email" name="email" id="business-email" class="form-control" placeholder="company@example.com" required>
+            </div>
+            <div class="form-group">
+                <label for="business-password" class="form-label">رمز عبور</label>
+                <input type="password" name="password" id="business-password" class="form-control" placeholder="رمز عبور را وارد کنید" required>
+            </div>
+            <div class="form-group">
+                <label for="business-name" class="form-label">نام شرکت</label>
+                <input type="text" name="business_name" id="business-name" class="form-control" placeholder="نام شرکت خود را وارد کنید" required>
+            </div>
+            <div class="form-group">
+                <label for="website" class="form-label">وب‌سایت</label>
+                <input type="url" name="website" id="website" class="form-control" placeholder="https://example.com">
+            </div>
+            <div class="form-group">
+                <label for="business-type" class="form-label">نوع کسب و کار</label>
+                <select name="business_type" id="business-type" class="form-control" required>
+                    <option value="" disabled selected>نوع کسب و کار خود را انتخاب کنید</option>
+                    <option value="retail">خرده‌فروشی</option>
+                    <option value="service">خدماتی</option>
+                    <option value="restaurant">رستوران</option>
+                    <option value="tourism">گردشگری</option>
+                    <option value="other">سایر</option>
+                </select>
+            </div>
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary">ثبت نام به عنوان کسب و کار</button>
+            </div>
+        </form>
+
+        <div class="mt-3 text-center">
+            <small>
+                حساب کاربری دارید؟ <a href="{{ url_for('auth.login') }}">وارد شوید</a>
+            </small>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const typeOptions = document.querySelectorAll('.type-option');
+    const influencerForm = document.getElementById('influencer-form');
+    const businessForm = document.getElementById('business-form');
+
+    typeOptions.forEach(option => {
+        option.addEventListener('click', function() {
+            const type = this.dataset.type;
+            
+            // Remove active class from all options
+            typeOptions.forEach(opt => opt.classList.remove('active'));
+            // Add active class to clicked option
+            this.classList.add('active');
+
+            // Show/hide appropriate form
+            if (type === 'influencer') {
+                influencerForm.style.display = 'block';
+                businessForm.style.display = 'none';
+            } else {
+                influencerForm.style.display = 'none';
+                businessForm.style.display = 'block';
+            }
+        });
+    });
+
+    // Set influencer as default active option
+    typeOptions[0].click();
+});
+</script>
+{% endblock %}

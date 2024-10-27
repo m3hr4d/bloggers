@@ -1,0 +1,477 @@
+:root {
+    --primary-color: #0066FF;
+    --secondary-color: #00A67E;
+    --text-primary: #1a1a1a;
+    --text-secondary: #666666;
+    --text-hint: #94a3b8;
+    --background-primary: #ffffff;
+    --background-secondary: #f8f9fa;
+    --border-color: #e9ecef;
+    --success-color: #28a745;
+    --radius-sm: 0.5rem;
+    --radius-md: 0.75rem;
+    --radius-lg: 1rem;
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.25rem;
+    --font-size-2xl: 1.5rem;
+    --spacing-1: 0.25rem;
+    --spacing-2: 0.5rem;
+    --spacing-3: 0.75rem;
+    --spacing-4: 1rem;
+    --spacing-5: 1.25rem;
+    --spacing-6: 1.5rem;
+    --spacing-8: 2rem;
+}
+
+.create-plan-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: var(--spacing-8);
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Progress Bar */
+.progress-wrapper {
+    margin-bottom: var(--spacing-8);
+    position: relative;
+    background: var(--background-secondary);
+    padding: var(--spacing-4);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+.progress {
+    height: 8px;
+    background: rgba(0, 102, 255, 0.1);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.progress-percentage {
+    position: absolute;
+    left: var(--spacing-4);
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: var(--font-size-sm);
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+/* Steps Navigation */
+.steps-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-8);
+    position: relative;
+    padding: 0 var(--spacing-4);
+}
+
+.steps-nav::before {
+    content: '';
+    position: absolute;
+    top: 1.25rem;
+    left: 3rem;
+    right: 3rem;
+    height: 2px;
+    background: var(--border-color);
+    z-index: 0;
+}
+
+.step-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    transition: transform 0.3s ease;
+}
+
+.step-item:hover {
+    transform: translateY(-2px);
+}
+
+.step-number {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background: var(--background-secondary);
+    border: 2px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-3);
+    transition: all 0.3s ease;
+    font-size: var(--font-size-sm);
+}
+
+.step-title {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    margin: 0;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.step-item.active .step-number {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+    box-shadow: 0 0 0 4px rgba(0, 102, 255, 0.2);
+}
+
+.step-item.active .step-title {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.step-item.completed .step-number {
+    background: var(--success-color);
+    border-color: var(--success-color);
+    color: white;
+}
+
+/* Form Card */
+.form-card {
+    background: var(--background-primary);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+    padding: var(--spacing-8);
+    margin-bottom: var(--spacing-6);
+    transition: all 0.3s ease;
+}
+
+.form-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.form-card h3 {
+    color: var(--text-primary);
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    margin-bottom: var(--spacing-6);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+}
+
+.form-card h3 i {
+    color: var(--primary-color);
+    font-size: var(--font-size-2xl);
+}
+
+/* Form Groups */
+.form-group {
+    margin-bottom: var(--spacing-6);
+    position: relative;
+}
+
+.form-group:last-child {
+    margin-bottom: 0;
+}
+
+.form-label {
+    display: block;
+    color: var(--text-primary);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    margin-bottom: var(--spacing-2);
+}
+
+.form-hint {
+    display: block;
+    color: var(--text-hint);
+    font-size: var(--font-size-xs);
+    margin-top: var(--spacing-1);
+}
+
+.form-control {
+    width: 100%;
+    padding: var(--spacing-4) var(--spacing-5);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-base);
+    transition: all 0.3s ease;
+    background: var(--background-primary);
+    color: var(--text-primary);
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
+    background: white;
+}
+
+.form-control::placeholder {
+    color: var(--text-hint);
+    font-size: var(--font-size-sm);
+}
+
+textarea.form-control {
+    min-height: 120px;
+    resize: vertical;
+    line-height: 1.6;
+}
+
+/* Services Grid */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--spacing-4);
+}
+
+.service-option {
+    position: relative;
+    cursor: pointer;
+}
+
+.service-option input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+}
+
+.service-option label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-4);
+    padding: var(--spacing-6);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-md);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    background: var(--background-primary);
+}
+
+.service-option label i {
+    font-size: var(--font-size-2xl);
+    color: var(--primary-color);
+    transition: transform 0.3s ease;
+}
+
+.service-option label span {
+    font-weight: 500;
+    color: var(--text-primary);
+    font-size: var(--font-size-sm);
+    text-align: center;
+}
+
+.service-option:hover label {
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+.service-option:hover label i {
+    transform: scale(1.1);
+}
+
+.service-option input[type="checkbox"]:checked + label {
+    background: #f0f7ff;
+    border-color: var(--primary-color);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Form Navigation */
+.form-navigation {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--spacing-4);
+    margin-top: var(--spacing-8);
+}
+
+.btn {
+    padding: var(--spacing-4) var(--spacing-6);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+}
+
+.btn-primary:hover {
+    background: #0052cc;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-secondary {
+    background: var(--background-primary);
+    color: var(--text-primary);
+    border: 2px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+    background: var(--background-secondary);
+    border-color: var(--text-secondary);
+}
+
+/* Form Steps */
+.form-step {
+    display: none;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.form-step.active {
+    display: block;
+}
+
+/* Success Message */
+.success-message {
+    text-align: center;
+    padding: var(--spacing-8);
+    animation: fadeIn 0.5s ease-out;
+}
+
+.success-icon {
+    font-size: 4rem;
+    color: var(--success-color);
+    margin-bottom: var(--spacing-4);
+    animation: scaleIn 0.5s ease-out;
+}
+
+.success-message h3 {
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-2);
+    font-size: var(--font-size-xl);
+}
+
+.success-message p {
+    color: var(--text-secondary);
+    font-size: var(--font-size-base);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.step-enter {
+    animation: stepEnter 0.5s ease-out;
+}
+
+@keyframes stepEnter {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Error States */
+.form-control.invalid {
+    border-color: #dc3545;
+}
+
+.error-message {
+    color: #dc3545;
+    font-size: var(--font-size-xs);
+    margin-top: var(--spacing-1);
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* RTL Support */
+[dir="rtl"] .progress-percentage {
+    right: var(--spacing-4);
+    left: auto;
+}
+
+[dir="rtl"] .form-navigation {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .btn i {
+    transform: scaleX(-1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .create-plan-container {
+        padding: var(--spacing-4);
+    }
+
+    .form-card {
+        padding: var(--spacing-4);
+    }
+
+    .steps-nav {
+        overflow-x: auto;
+        padding-bottom: var(--spacing-4);
+        margin: 0 -1rem var(--spacing-6);
+        padding: 0 1rem var(--spacing-4);
+    }
+
+    .step-item {
+        min-width: 100px;
+        padding: 0 var(--spacing-2);
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-3);
+    }
+
+    .form-navigation {
+        flex-direction: column;
+        gap: var(--spacing-3);
+    }
+
+    .btn {
+        width: 100%;
+        justify-content: center;
+        padding: var(--spacing-4);
+    }
+
+    .form-card h3 {
+        font-size: var(--font-size-lg);
+    }
+
+    .step-title {
+        font-size: var(--font-size-xs);
+    }
+}

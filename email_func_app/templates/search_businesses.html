@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>جستجوی کسب‌وکارها</h2>
+    <form method="POST" action="{{ url_for('offers.search_businesses') }}">
+        <div class="mb-3">
+            <label for="business_name" class="form-label">نام کسب‌وکار</label>
+            <input type="text" class="form-control" id="business_name" name="business_name" placeholder="نام کسب‌وکار را وارد کنید">
+        </div>
+        <div class="mb-3">
+            <label for="service" class="form-label">خدمات ارائه‌شده</label>
+            <input type="text" class="form-control" id="service" name="service" placeholder="خدمات مورد نظر را وارد کنید">
+        </div>
+        <button type="submit" class="btn btn-primary">جستجو</button>
+    </form>
+
+    {% if search_results %}
+        <h3 class="mt-5">نتایج جستجو</h3>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>نام کسب‌وکار</th>
+                        <th>ایمیل</th>
+                        <th>وب‌سایت</th>
+                        <th>مشاهده پروفایل</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for business in search_results %}
+                    <tr>
+                        {% set extra_fields = business.extra_fields | safe %}
+                        {% if extra_fields %}
+                            {% set extra_fields = extra_fields | ast.literal_eval %}
+                        {% else %}
+                            {% set extra_fields = {} %}
+                        {% endif %}
+                        <td>{{ extra_fields.get('business_name', '') }}</td>
+                        <td>{{ business.email }}</td>
+                        <td>{{ extra_fields.get('business_website', '') }}</td>
+                        <td>
+                            <a href="{{ url_for('offers.business_profile', business_id=business.id) }}" class="btn btn-sm btn-primary">مشاهده</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% elif request.method == 'POST' %}
+        <p class="mt-5">هیچ نتیجه‌ای یافت نشد.</p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,237 @@
+/* Content Grid Layout */
+.content-grid {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 1.5rem;
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* Profile Card */
+.profile-card {
+  background: var(--background-primary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-color);
+  transition: var(--transition);
+  height: fit-content;
+}
+
+.profile-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+/* Card Header */
+.card-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-header h2 {
+  font-size: 1.25rem;
+  color: var(--text-primary);
+  font-weight: 600;
+  margin: 0;
+}
+
+.edit-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--primary-color);
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: var(--transition);
+}
+
+.edit-link:hover {
+  color: var(--primary-hover);
+}
+
+/* Card Content */
+.card-content {
+  padding: 1.5rem;
+}
+
+/* Profile Image */
+.profile-image {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1.5rem;
+  border-radius: 50%;
+  background: var(--background-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+
+.profile-image i {
+  font-size: 2.5rem;
+  color: var(--primary-color);
+}
+
+.profile-image:hover {
+  transform: scale(1.05);
+}
+
+/* Profile Details */
+.profile-details {
+  text-align: center;
+}
+
+.profile-details h3 {
+  font-size: 1.25rem;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.profile-details p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: var(--text-secondary);
+  margin: 0.5rem 0;
+  font-size: 0.875rem;
+}
+
+.user-type {
+  background: var(--primary-color);
+  color: white !important;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-sm);
+  display: inline-block;
+  font-size: 0.75rem;
+  margin: 0.5rem 0 1rem;
+}
+
+/* Wide Card (Table Card) */
+.wide-card {
+  background: var(--background-primary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+}
+
+/* Table Styles */
+.table-responsive {
+  overflow-x: auto;
+  margin: 0 -1.5rem;
+}
+
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.custom-table th {
+  background: var(--background-secondary);
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  text-align: right;
+  padding: 1rem 1.5rem;
+}
+
+.custom-table td {
+  padding: 1rem 1.5rem;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.875rem;
+}
+
+.custom-table tr {
+  transition: var(--transition);
+}
+
+.custom-table tr:hover {
+  background: var(--background-secondary);
+}
+
+/* Status Badge */
+.status-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.status-badge.active {
+  background: var(--success-color);
+  color: white;
+}
+
+.status-badge.pending {
+  background: var(--warning-color);
+  color: white;
+}
+
+/* Action Links */
+.action-link {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.action-link:hover {
+  color: var(--primary-hover);
+}
+
+/* No Data Message */
+.no-data {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .card-header {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .table-responsive {
+    margin: 0;
+  }
+
+  .custom-table th,
+  .custom-table td {
+    padding: 0.75rem 1rem;
+  }
+}
+
+/* RTL Support */
+[dir="rtl"] .content-grid {
+  text-align: right;
+}
+
+[dir="rtl"] .custom-table th,
+[dir="rtl"] .custom-table td {
+  text-align: right;
+}

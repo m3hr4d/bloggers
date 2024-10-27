@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}اینفلوئنسرها - بلاگرز{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pages/influencers.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="influencer-page">
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>همکاری با برندهای معتبر</h1>
+            <p>با بلاگرز، به راحتی با برندهای معتبر همکاری کنید و درآمد خود را افزایش دهید</p>
+            
+            <div class="hero-stats">
+                <div class="stat">
+                    <h4>+۵۰۰</h4>
+                    <p>برند فعال</p>
+                </div>
+                <div class="stat">
+                    <h4>+۲۰۰۰</h4>
+                    <p>همکاری موفق</p>
+                </div>
+                <div class="stat">
+                    <h4>+۱۰۰۰</h4>
+                    <p>اینفلوئنسر فعال</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2>مزایای همکاری با بلاگرز</h2>
+            <p>با امکانات ویژه بلاگرز، کسب و کار خود را متحول کنید</p>
+            
+            <div class="features-grid">
+                <div class="feature">
+                    <div class="icon">
+                        <i class="bi bi-graph-up"></i>
+                    </div>
+                    <h3>افزایش درآمد</h3>
+                    <p>با همکاری با برندهای معتبر، درآمد خود را افزایش دهید</p>
+                </div>
+                
+                <div class="feature">
+                    <div class="icon">
+                        <i class="bi bi-shield-check"></i>
+                    </div>
+                    <h3>همکاری امن</h3>
+                    <p>با خیال راحت و بدون نگرانی همکاری کنید</p>
+                </div>
+                
+                <div class="feature">
+                    <div class="icon">
+                        <i class="bi bi-people"></i>
+                    </div>
+                    <h3>شبکه گسترده</h3>
+                    <p>به شبکه بزرگی از برندها دسترسی داشته باشید</p>
+                </div>
+                
+                <div class="feature">
+                    <div class="icon">
+                        <i class="bi bi-lightning"></i>
+                    </div>
+                    <h3>رشد سریع</h3>
+                    <p>با همکاری‌های متنوع، سریع‌تر رشد کنید</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>همین حالا شروع کنید</h2>
+            <p>به جمع هزاران اینفلوئنسر موفق در بلاگرز بپیوندید</p>
+            <a href="#" class="btn btn-primary">ثبت نام اینفلوئنسر</a>
+        </div>
+    </section>
+</div>
+{% endblock %}

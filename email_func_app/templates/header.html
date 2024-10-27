@@ -1,0 +1,30 @@
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{ url_for('main.index') }}">سیستم همکاری با اینفلوئنسرها</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('main.index') }}">خانه</a>
+                </li>
+                {% if current_user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('main.dashboard') }}">داشبورد</a>
+                </li>
+                {% endif %}
+            </ul>
+            <div class="d-flex align-items-center">
+                {% if current_user.is_authenticated %}
+                    <span class="me-3">{{ current_user.email }}</span>
+                    <a href="{{ url_for('auth.logout') }}" class="btn btn-outline-primary">خروج</a>
+                {% else %}
+                    <a href="{{ url_for('auth.login') }}" class="btn btn-outline-primary me-2">ورود</a>
+                    <a href="{{ url_for('auth.register') }}" class="btn btn-primary">ثبت نام</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</nav>

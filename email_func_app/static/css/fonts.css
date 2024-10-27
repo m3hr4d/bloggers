@@ -1,0 +1,7 @@
+/* Font-face declaration for BYekan font */
+@font-face {
+    font-family: 'BYekan';
+    src: url('../fonts/BYekan.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}

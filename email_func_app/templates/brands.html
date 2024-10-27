@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}برندها - بلاگرز{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pages/brands.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="brands-page">
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>تبلیغات موثر با اینفلوئنسرها</h1>
+            <p>با بلاگرز، به راحتی با اینفلوئنسرهای مناسب کسب و کار خود همکاری کنید و فروش خود را افزایش دهید</p>
+            
+            <div class="hero-stats">
+                <div class="stat">
+                    <h4>+۱۰۰۰</h4>
+                    <p>اینفلوئنسر فعال</p>
+                </div>
+                <div class="stat">
+                    <h4>+۲۰۰۰</h4>
+                    <p>همکاری موفق</p>
+                </div>
+                <div class="stat">
+                    <h4>+۵۰۰</h4>
+                    <p>برند فعال</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2>مزایای همکاری با بلاگرز</h2>
+            <p>با امکانات ویژه بلاگرز، تبلیغات خود را هدفمند کنید</p>
+            
+            <div class="features-grid">
+                <div class="feature">
+                    <div class="icon">
+                        <i class="bi bi-search"></i>
+                    </div>
+                    <h3>جستجوی هوشمند</h3>
+                    <p>اینفلوئنسرهای مناسب کسب و کار خود را پیدا کنید</p>
+                </div>
+                
+                <div class="feature">
+                    <div class="icon">
+                        <i class="bi bi-graph-up"></i>
+                    </div>
+                    <h3>افزایش فروش</h3>
+                    <p>با تبلیغات موثر، فروش خود را افزایش دهید</p>
+                </div>
+                
+                <div class="feature">
+                    <div class="icon">
+                        <i class="bi bi-shield-check"></i>
+                    </div>
+                    <h3>همکاری امن</h3>
+                    <p>با خیال راحت و تضمین کیفیت همکاری کنید</p>
+                </div>
+                
+                <div class="feature">
+                    <div class="icon">
+                        <i class="bi bi-bar-chart"></i>
+                    </div>
+                    <h3>گزارش عملکرد</h3>
+                    <p>نتایج همکاری‌ها را به دقت رصد کنید</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>همین حالا شروع کنید</h2>
+            <p>به جمع صدها برند موفق در بلاگرز بپیوندید</p>
+            <a href="#" class="btn btn-primary">ثبت نام برند</a>
+        </div>
+    </section>
+</div>
+{% endblock %}

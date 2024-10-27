@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}بلاگرز - پلتفرم همکاری اینفلوئنسرها و برندها{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/sections/hero.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/sections/features.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/sections/audience.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/sections/cta.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="marketing-content">
+    {% include "sections/hero.html" %}
+    {% include "sections/features.html" %}
+    {% include "sections/audience.html" %}
+    {% include "sections/cta.html" %}
+</div>
+{% endblock %}

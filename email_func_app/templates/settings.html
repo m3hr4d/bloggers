@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}تنظیمات{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/sections/settings/info.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/sections/settings/form.css') }}">
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="settings-container">
+    <div class="settings-header">
+        <h1>تنظیمات حساب کاربری</h1>
+        <p>مدیریت اطلاعات و تنظیمات حساب کاربری</p>
+    </div>
+
+    <div class="settings-grid">
+        <!-- Info Section -->
+        <div class="settings-sidebar">
+            {% include 'sections/settings/info.html' %}
+        </div>
+        
+        <!-- Form Section -->
+        <div class="settings-main">
+            {% include 'sections/settings/form.html' %}
+        </div>
+    </div>
+</div>
+{% endblock %}

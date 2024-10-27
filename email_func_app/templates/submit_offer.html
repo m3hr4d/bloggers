@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block dashboard_content %}
+<div class="container mt-4">
+    <h2>ارسال پیشنهاد</h2>
+    <form method="POST" action="{{ url_for('offers.submit_offer', plan_id=plan.id) }}">
+        <!-- Service Offered Field -->
+        <div class="mb-3">
+            <label for="service_offered" class="form-label">خدمات پیشنهادی</label>
+            <div class="input-group">
+                <input type="text" class="form-control" id="service_offered" name="service_offered" placeholder="مثال: اقامت در هتل ۵ ستاره">
+                <span class="input-group-text" data-bs-toggle="tooltip" title="لطفاً خدماتی که می‌خواهید به اینفلوئنسر ارائه دهید را وارد کنید. (مثال: بلیط پرواز، اقامت در هتل، تور گردشگری)">
+                    <i class="bi bi-question-circle"></i>
+                </span>
+            </div>
+            {% if form.service_offered.errors %}
+                <div class="text-danger">
+                    {% for error in form.service_offered.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        <!-- Description Field -->
+        <div class="mb-3">
+            <label for="description" class="form-label">توضیحات</label>
+            <div class="input-group">
+                <textarea class="form-control" id="description" name="description" rows="5" placeholder="مثال: ما اقامت ۳ شب در هتل لوکس خود را به شما پیشنهاد می‌دهیم..."></textarea>
+                <span class="input-group-text" data-bs-toggle="tooltip" title="جزئیات بیشتری در مورد پیشنهاد خود بنویسید تا اینفلوئنسر بهتر آن را درک کند. (مثال: امکانات هتل، خدمات ویژه، شرایط همکاری)">
+                    <i class="bi bi-question-circle"></i>
+                </span>
+            </div>
+            {% if form.description.errors %}
+                <div class="text-danger">
+                    {% for error in form.description.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        <button type="submit" class="btn btn-primary">ارسال پیشنهاد</button>
+    </form>
+</div>
+
+<!-- Include Bootstrap JS for tooltips -->
+<script>
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+
+{% block title %}جزئیات کمپین{% endblock %}
+
+{% block dashboard_content %}
+<section class="campaign-details py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-4">
+                            <div>
+                                <h2 class="card-title mb-2">{{ campaign.title }}</h2>
+                                <p class="text-muted">
+                                    <i class="bi bi-calendar"></i>
+                                    {{ campaign.start_date.strftime('%Y-%m-%d') }} تا {{ campaign.end_date.strftime('%Y-%m-%d') }}
+                                </p>
+                            </div>
+                            <div>
+                                <span class="badge bg-primary">{{ campaign.campaign_type }}</span>
+                                {% if campaign.niche %}
+                                    <span class="badge bg-secondary">{{ campaign.niche }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="campaign-section mb-4">
+                            <h5 class="section-title">
+                                <i class="bi bi-info-circle"></i>
+                                توضیحات
+                            </h5>
+                            <p class="mb-0">{{ campaign.description }}</p>
+                        </div>
+
+                        {% if campaign.requirements %}
+                            <div class="campaign-section mb-4">
+                                <h5 class="section-title">
+                                    <i class="bi bi-list-check"></i>
+                                    نیازمندی‌ها
+                                </h5>
+                                <p class="mb-0">{{ campaign.requirements }}</p>
+                            </div>
+                        {% endif %}
+
+                        {% if campaign.follower_count %}
+                            <div class="campaign-section mb-4">
+                                <h5 class="section-title">
+                                    <i class="bi bi-people"></i>
+                                    حداقل دنبال‌کننده مورد نیاز
+                                </h5>
+                                <p class="mb-0">{{ campaign.follower_count }}</p>
+                            </div>
+                        {% endif %}
+
+                        <div class="campaign-section mb-4">
+                            <h5 class="section-title">
+                                <i class="bi bi-clock"></i>
+                                زمان‌بندی
+                            </h5>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p class="mb-2">
+                                        <strong>تاریخ شروع:</strong>
+                                        {{ campaign.start_date.strftime('%Y-%m-%d') }}
+                                    </p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="mb-2">
+                                        <strong>تاریخ پایان:</strong>
+                                        {{ campaign.end_date.strftime('%Y-%m-%d') }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between mt-4">
+                            <a href="{{ url_for('offers.view_campaigns') }}" class="btn btn-outline-secondary">
+                                <i class="bi bi-arrow-right"></i>
+                                بازگشت به لیست کمپین‌ها
+                            </a>
+                            {% if current_user.id == campaign.user_id %}
+                                <div>
+                                    <a href="#" class="btn btn-primary me-2">
+                                        <i class="bi bi-pencil"></i>
+                                        ویرایش کمپین
+                                    </a>
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteCampaignModal">
+                                        <i class="bi bi-trash"></i>
+                                        حذف کمپین
+                                    </button>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Delete Campaign Modal -->
+{% if current_user.id == campaign.user_id %}
+<div class="modal fade" id="deleteCampaignModal" tabindex="-1" aria-labelledby="deleteCampaignModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteCampaignModalLabel">تأیید حذف کمپین</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                آیا از حذف این کمپین اطمینان دارید؟ این عمل غیرقابل بازگشت است.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">انصراف</button>
+                <form action="{{ url_for('offers.delete_campaign', campaign_id=campaign.id) }}" method="POST" class="d-inline">
+                    <button type="submit" class="btn btn-danger">حذف کمپین</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<style>
+    .campaign-section {
+        padding: 1.5rem;
+        background-color: #f8f9fa;
+        border-radius: 0.5rem;
+    }
+
+    .section-title {
+        color: #0069ff;
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+    }
+
+    .section-title i {
+        margin-left: 0.5rem;
+    }
+
+    .badge {
+        font-size: 0.9rem;
+        padding: 0.5em 1em;
+        margin-left: 0.5rem;
+    }
+
+    .bi {
+        margin-left: 0.5rem;
+    }
+</style>
+{% endblock %}
