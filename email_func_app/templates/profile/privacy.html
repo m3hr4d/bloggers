@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Privacy Settings</h5>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        {{ form.csrf_token }}
+                        
+                        <div class="mb-4">
+                            <h6 class="mb-3">Profile Visibility</h6>
+                            <div class="mb-3">
+                                {{ form.profile_visibility.label(class="form-label") }}
+                                {{ form.profile_visibility(class="form-select") }}
+                                {% if form.profile_visibility.errors %}
+                                    {% for error in form.profile_visibility.errors %}
+                                        <div class="text-danger">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                                <small class="text-muted">
+                                    <ul class="mt-2">
+                                        <li>Public: Your profile is visible to everyone</li>
+                                        <li>Registered Users Only: Only registered users can view your profile</li>
+                                        <li>Private: Your profile is only visible to approved connections</li>
+                                    </ul>
+                                </small>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <h6 class="mb-3">Information Display</h6>
+                            <div class="form-check mb-2">
+                                {{ form.show_contact_info(class="form-check-input") }}
+                                {{ form.show_contact_info.label(class="form-check-label") }}
+                                <small class="text-muted d-block">Display your contact information on your profile</small>
+                            </div>
+                            <div class="form-check mb-2">
+                                {{ form.show_analytics(class="form-check-input") }}
+                                {{ form.show_analytics.label(class="form-check-label") }}
+                                <small class="text-muted d-block">Show your engagement metrics and analytics</small>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <h6 class="mb-3">Communication Settings</h6>
+                            <div class="form-check mb-2">
+                                {{ form.allow_messages(class="form-check-input") }}
+                                {{ form.allow_messages.label(class="form-check-label") }}
+                                <small class="text-muted d-block">Allow other users to send you messages</small>
+                            </div>
+                        </div>
+
+                        <div class="alert alert-info" role="alert">
+                            <i class="bi bi-shield-lock me-2"></i>
+                            Your privacy is important to us. These settings help you control who can see your information and how they can interact with you.
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ url_for('profile.view_profile') }}" class="btn btn-secondary">Cancel</a>
+                            <button type="submit" class="btn btn-primary">Save Settings</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Data Privacy Information -->
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Data Privacy Information</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-4">
+                        <h6>How We Protect Your Data</h6>
+                        <p class="text-muted">We use industry-standard security measures to protect your personal information. Your data is encrypted and stored securely.</p>
+                    </div>
+                    <div class="mb-4">
+                        <h6>Your Data Rights</h6>
+                        <ul class="text-muted">
+                            <li>Request a copy of your data</li>
+                            <li>Update or correct your information</li>
+                            <li>Delete your account and associated data</li>
+                            <li>Export your data in a portable format</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h6>Contact Us</h6>
+                        <p class="text-muted mb-0">If you have any questions about your privacy or data protection, please contact our privacy team at privacy@example.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

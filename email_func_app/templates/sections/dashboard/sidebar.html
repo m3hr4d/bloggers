@@ -1,0 +1,85 @@
+<!-- Sidebar -->
+<nav class="sidebar">
+    <div class="sidebar-header">
+        <a href="{{ url_for('main.dashboard') }}" class="logo">
+            <i class="fas fa-th-large"></i>
+            <span>بلاگرز</span>
+        </a>
+    </div>
+
+    <div class="sidebar-nav">
+        <div class="nav-section">
+            <a href="{{ url_for('main.dashboard') }}" class="nav-item {% if request.endpoint == 'main.dashboard' %}active{% endif %}">
+                <div class="nav-item-icon">
+                    <i class="fas fa-home"></i>
+                </div>
+                <span>داشبورد</span>
+            </a>
+            
+            {% if current_user.user_type == 'business' %}
+            <a href="{{ url_for('main.campaigns') }}" class="nav-item {% if request.endpoint == 'main.campaigns' %}active{% endif %}">
+                <div class="nav-item-icon">
+                    <i class="fas fa-bullhorn"></i>
+                </div>
+                <span>کمپین‌ها</span>
+            </a>
+            <a href="{{ url_for('main.influencers') }}" class="nav-item {% if request.endpoint == 'main.influencers' %}active{% endif %}">
+                <div class="nav-item-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <span>اینفلوئنسرها</span>
+            </a>
+            {% endif %}
+            
+            {% if current_user.user_type == 'influencer' %}
+            <a href="{{ url_for('main.opportunities') }}" class="nav-item {% if request.endpoint == 'main.opportunities' %}active{% endif %}">
+                <div class="nav-item-icon">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <span>فرصت‌ها</span>
+            </a>
+            <a href="{{ url_for('main.portfolio') }}" class="nav-item {% if request.endpoint == 'main.portfolio' %}active{% endif %}">
+                <div class="nav-item-icon">
+                    <i class="fas fa-images"></i>
+                </div>
+                <span>نمونه کارها</span>
+            </a>
+            {% endif %}
+            
+            <a href="{{ url_for('main.analytics') }}" class="nav-item {% if request.endpoint == 'main.analytics' %}active{% endif %}">
+                <div class="nav-item-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <span>آنالیتیکس</span>
+            </a>
+            
+            <a href="{{ url_for('chat.get_conversations') }}" class="nav-item {% if request.endpoint == 'chat.get_conversations' %}active{% endif %}">
+                <div class="nav-item-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <span>پیام‌ها</span>
+                {% if unread_messages > 0 %}
+                <div class="badge">{{ unread_messages }}</div>
+                {% endif %}
+            </a>
+        </div>
+    </div>
+
+    <!-- Sidebar Footer -->
+    <div class="sidebar-footer">
+        <div class="nav-section">
+            <a href="{{ url_for('main.settings') }}" class="nav-item {% if request.endpoint == 'main.settings' %}active{% endif %}">
+                <div class="nav-item-icon">
+                    <i class="fas fa-cog"></i>
+                </div>
+                <span>تنظیمات</span>
+            </a>
+            <a href="#" class="nav-item">
+                <div class="nav-item-icon">
+                    <i class="fas fa-question-circle"></i>
+                </div>
+                <span>راهنما و پشتیبانی</span>
+            </a>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <!-- Conversations List -->
+        <div class="col-md-4 conversations-list">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Conversations</h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="list-group list-group-flush">
+                        {% for conversation in conversations %}
+                        <a href="{{ url_for('chat.get_conversation', conversation_id=conversation.id) }}"
+                           class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">
+                                    {% if current_user.id == conversation.influencer_id %}
+                                        {{ conversation.business.username }}
+                                    {% else %}
+                                        {{ conversation.influencer.username }}
+                                    {% endif %}
+                                </h6>
+                                <small class="text-muted">
+                                    {{ conversation.updated_at.strftime('%Y-%m-%d') }}
+                                </small>
+                            </div>
+                            {% if conversation.messages %}
+                            <p class="mb-1 text-truncate">
+                                {{ conversation.messages[-1].body }}
+                            </p>
+                            {% endif %}
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Selected Conversation -->
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="text-muted">Select a conversation to start chatting</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.conversations-list {
+    height: calc(100vh - 100px);
+    overflow-y: auto;
+}
+
+.list-group-item {
+    border-left: none;
+    border-right: none;
+}
+
+.list-group-item:first-child {
+    border-top: none;
+}
+
+.list-group-item:last-child {
+    border-bottom: none;
+}
+
+.unread-indicator {
+    width: 10px;
+    height: 10px;
+    background-color: #007bff;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 5px;
+}
+</style>
+{% endblock %}

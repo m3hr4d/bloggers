@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block title %}سارا محمدی - بلاگرز{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pages/influencer_profile.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="profile-page">
+    <!-- Hero Section -->
+    <section class="profile-hero">
+        <div class="container">
+            <div class="profile-header">
+                <div class="profile-image">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="سارا محمدی">
+                </div>
+                <div class="profile-info">
+                    <div class="profile-title">
+                        <h1>سارا محمدی</h1>
+                        <div class="location">
+                            <i class="bi bi-geo-alt"></i>
+                            تهران، ایران
+                        </div>
+                    </div>
+                    <div class="social-stats">
+                        <div class="stat-item">
+                            <i class="bi bi-instagram"></i>
+                            <span class="platform">اینستاگرام</span>
+                            <span class="count">۱۵۰K دنبال‌کننده</span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="bi bi-tiktok"></i>
+                            <span class="platform">تیک‌تاک</span>
+                            <span class="count">۸۰K دنبال‌کننده</span>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary contact-btn">
+                            <i class="bi bi-envelope"></i>
+                            ارتباط با من
+                        </button>
+                        <button class="btn btn-light favorite-btn">
+                            <i class="bi bi-heart"></i>
+                            افزودن به علاقه‌مندی‌ها
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="profile-content">
+        <div class="container">
+            <div class="content-grid">
+                <!-- Left Column -->
+                <div class="main-content">
+                    <div class="content-card about-section">
+                        <h2>درباره من</h2>
+                        <p>استایلیست و بلاگر مد و سبک زندگی با بیش از ۵ سال تجربه در تولید محتوای دیجیتال. متخصص در زمینه مد پایدار و سبک زندگی مینیمال. همکاری با برندهای معتبر در زمینه مد و لباس.</p>
+                    </div>
+
+                    <div class="content-card portfolio-section">
+                        <h2>نمونه کارها</h2>
+                        <div class="portfolio-grid">
+                            <div class="portfolio-item">
+                                <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" alt="نمونه کار ۱">
+                            </div>
+                            <div class="portfolio-item">
+                                <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" alt="نمونه کار ۲">
+                            </div>
+                            <div class="portfolio-item">
+                                <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" alt="نمونه کار ۳">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div class="sidebar">
+                    <div class="content-card pricing-section">
+                        <h2>تعرفه‌های همکاری</h2>
+                        <div class="pricing-options">
+                            <div class="pricing-option">
+                                <div class="option-header">
+                                    <h3>پست اینستاگرام</h3>
+                                    <span class="price">۸۰۰,۰۰۰ تومان</span>
+                                </div>
+                                <p>یک پست اختصاصی در فید اینستاگرام با محتوای سفارشی</p>
+                            </div>
+                            <div class="pricing-option">
+                                <div class="option-header">
+                                    <h3>استوری اینستاگرام</h3>
+                                    <span class="price">۵۰۰,۰۰۰ تومان</span>
+                                </div>
+                                <p>مجموعه ۳ استوری مرتبط با محصول یا برند شما</p>
+                            </div>
+                            <div class="pricing-option">
+                                <div class="option-header">
+                                    <h3>ویدیو تیک‌تاک</h3>
+                                    <span class="price">۱,۲۰۰,۰۰۰ تومان</span>
+                                </div>
+                                <p>یک ویدیو اختصاصی با محتوای سفارشی برای تیک‌تاک</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-card stats-section">
+                        <h2>آمار و ارقام</h2>
+                        <div class="stats-grid">
+                            <div class="stat-box">
+                                <span class="stat-value">۹۵٪</span>
+                                <span class="stat-label">مخاطبان زن</span>
+                            </div>
+                            <div class="stat-box">
+                                <span class="stat-value">۱۸-۳۵</span>
+                                <span class="stat-label">رده سنی</span>
+                            </div>
+                            <div class="stat-box">
+                                <span class="stat-value">۴.۸٪</span>
+                                <span class="stat-label">نرخ تعامل</span>
+                            </div>
+                            <div class="stat-box">
+                                <span class="stat-value">۲۰۰+</span>
+                                <span class="stat-label">همکاری موفق</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <!-- Add New Account -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Add Social Media Account</h5>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        {{ form.csrf_token }}
+                        
+                        <div class="mb-3">
+                            {{ form.platform.label(class="form-label") }}
+                            {{ form.platform(class="form-select") }}
+                            {% if form.platform.errors %}
+                                {% for error in form.platform.errors %}
+                                    <div class="text-danger">{{ error }}</div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.username.label(class="form-label") }}
+                            {{ form.username(class="form-control") }}
+                            {% if form.username.errors %}
+                                {% for error in form.username.errors %}
+                                    <div class="text-danger">{{ error }}</div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.profile_url.label(class="form-label") }}
+                            {{ form.profile_url(class="form-control") }}
+                            {% if form.profile_url.errors %}
+                                {% for error in form.profile_url.errors %}
+                                    <div class="text-danger">{{ error }}</div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Add Account</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Existing Accounts -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Connected Accounts</h5>
+                </div>
+                <div class="card-body">
+                    {% if accounts %}
+                        <div class="list-group">
+                            {% for account in accounts %}
+                                <div class="list-group-item">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <i class="bi bi-{{ account.platform }} me-2"></i>
+                                            <strong>{{ account.platform|title }}</strong>
+                                            <span class="text-muted ms-2">{{ account.username }}</span>
+                                        </div>
+                                        <div>
+                                            <a href="{{ account.profile_url }}" target="_blank" class="btn btn-sm btn-outline-primary me-2">
+                                                <i class="bi bi-box-arrow-up-right"></i>
+                                            </a>
+                                            <button class="btn btn-sm btn-outline-danger delete-account" data-account-id="{{ account.id }}">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="text-muted text-center mb-0">No social media accounts connected yet.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Handle account deletion
+    document.querySelectorAll('.delete-account').forEach(button => {
+        button.addEventListener('click', function() {
+            const accountId = this.dataset.accountId;
+            if (confirm('Are you sure you want to remove this social media account?')) {
+                fetch(`/profile/social-media/${accountId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token() }}'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message) {
+                        location.reload();
+                    } else {
+                        alert('Error removing account');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error removing account');
+                });
+            }
+        });
+    });
+});
+</script>
+{% endblock %}
+
+{% endblock %}

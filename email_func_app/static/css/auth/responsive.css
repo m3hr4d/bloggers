@@ -1,0 +1,160 @@
+/* Small Mobile (< 375px) */
+@media (max-width: 374px) {
+    .auth-box {
+        padding: 16px;
+    }
+
+    .auth-box h1 {
+        font-size: 18px;
+    }
+
+    .auth-box p {
+        font-size: 12px;
+    }
+
+    .form-control {
+        font-size: 13px;
+        height: 30px;
+        padding: 4px 10px;
+    }
+
+    .btn {
+        font-size: 13px;
+        padding: 4px 10px;
+        height: 30px;
+    }
+
+    .form-label {
+        font-size: 12px;
+    }
+
+    .type-option {
+        padding: 12px;
+    }
+
+    .type-option i {
+        font-size: 20px;
+    }
+
+    .type-option span {
+        font-size: 12px;
+    }
+
+    .type-description {
+        font-size: 11px;
+    }
+}
+
+/* Mobile (375px - 480px) */
+@media (min-width: 375px) and (max-width: 480px) {
+    .auth-box {
+        padding: 20px;
+    }
+
+    .auth-box h1 {
+        font-size: 20px;
+    }
+
+    .form-control {
+        font-size: 14px;
+        height: 32px;
+    }
+
+    .btn {
+        font-size: 14px;
+        height: 32px;
+    }
+}
+
+/* Tablet (481px - 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+    .auth-container {
+        padding: 32px;
+    }
+
+    .auth-box {
+        padding: 24px;
+        max-width: 440px;
+    }
+}
+
+/* Small Desktop (769px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .auth-container {
+        padding: 40px;
+    }
+
+    .auth-box {
+        padding: 32px;
+        max-width: 480px;
+    }
+}
+
+/* RTL Support */
+[dir="rtl"] {
+    .input-group > .form-control:not(:last-child) {
+        border-radius: 0 6px 6px 0;
+    }
+
+    .input-group > .input-group-text:not(:first-child) {
+        border-radius: 6px 0 0 6px;
+    }
+
+    .btn i {
+        margin-right: 8px;
+        margin-left: 0;
+    }
+
+    .alert i {
+        margin-right: 8px;
+        margin-left: 0;
+    }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) {
+    .btn:hover {
+        transform: none;
+    }
+
+    .type-option:hover {
+        transform: none;
+    }
+
+    .form-control:hover {
+        border-color: var(--border-color);
+    }
+}
+
+/* High DPI Screens */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .auth-box {
+        border-width: 0.5px;
+    }
+
+    .form-control,
+    .btn,
+    .input-group-text {
+        border-width: 0.5px;
+    }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+    .auth-box {
+        background: var(--background-primary);
+        border-color: var(--border-color);
+    }
+
+    .form-control {
+        background-color: var(--background-primary);
+        border-color: var(--border-color);
+        color: var(--text-primary);
+    }
+
+    .input-group-text {
+        background-color: var(--background-secondary);
+        border-color: var(--border-color);
+        color: var(--text-secondary);
+    }
+}

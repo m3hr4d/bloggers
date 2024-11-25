@@ -1,0 +1,240 @@
+{% extends "base.html" %}
+
+{% block title %}تکمیل اطلاعات کسب و کار - بلاگرز{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/auth/onboarding.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-box onboarding-box">
+        <div class="text-center mb-4">
+            <h1 class="mb-4">بلاگرز</h1>
+            <div class="progress-bar">
+                <div class="progress" style="width: {{ (step / total_steps) * 100 }}%"></div>
+            </div>
+        </div>
+
+        <form method="POST" action="{{ url_for('auth.onboarding', step=step) }}" class="onboarding-form" id="onboardingForm">
+            {% if form %}
+            {{ form.hidden_tag() }}
+            {% endif %}
+            
+            {% if step == 1 %}
+            <div class="step-content">
+                <h2>بیایید کسب و کار شما را بهتر بشناسیم!</h2>
+                <p class="text-secondary mb-4">صنعت مرتبط با کسب و کار خود را انتخاب کنید</p>
+                
+                <div class="industry-options">
+                    <div class="option-card" data-value="agency">
+                        <i class="bi bi-building"></i>
+                        <span>آژانس</span>
+                    </div>
+                    <div class="option-card" data-value="ecommerce">
+                        <i class="bi bi-cart"></i>
+                        <span>فروشگاه آنلاین</span>
+                    </div>
+                    <div class="option-card" data-value="website">
+                        <i class="bi bi-globe"></i>
+                        <span>وب‌سایت/اپلیکیشن</span>
+                    </div>
+                    <div class="option-card" data-value="retail">
+                        <i class="bi bi-shop"></i>
+                        <span>فروشگاه فیزیکی</span>
+                    </div>
+                    <div class="option-card" data-value="other">
+                        <i class="bi bi-three-dots"></i>
+                        <span>سایر</span>
+                    </div>
+                </div>
+                <input type="hidden" name="industry" id="selectedIndustry">
+            </div>
+
+            {% elif step == 2 %}
+            <div class="step-content">
+                <h2>حوزه فعالیت شما چیست؟</h2>
+                <p class="text-secondary mb-4">دسته‌بندی‌های مرتبط با کسب و کار خود را انتخاب کنید</p>
+                
+                <div class="category-grid">
+                    <div class="category-option">
+                        <input type="checkbox" name="categories" value="fashion" id="fashion">
+                        <label for="fashion">مد و پوشاک</label>
+                    </div>
+                    <div class="category-option">
+                        <input type="checkbox" name="categories" value="beauty" id="beauty">
+                        <label for="beauty">زیبایی و آرایشی</label>
+                    </div>
+                    <div class="category-option">
+                        <input type="checkbox" name="categories" value="tech" id="tech">
+                        <label for="tech">تکنولوژی</label>
+                    </div>
+                    <div class="category-option">
+                        <input type="checkbox" name="categories" value="food" id="food">
+                        <label for="food">غذا و نوشیدنی</label>
+                    </div>
+                    <div class="category-option">
+                        <input type="checkbox" name="categories" value="health" id="health">
+                        <label for="health">سلامت و تندرستی</label>
+                    </div>
+                    <div class="category-option">
+                        <input type="checkbox" name="categories" value="entertainment" id="entertainment">
+                        <label for="entertainment">سرگرمی</label>
+                    </div>
+                </div>
+            </div>
+
+            {% elif step == 3 %}
+            <div class="step-content">
+                <h2>تجربه همکاری با اینفلوئنسرها</h2>
+                <p class="text-secondary mb-4">میزان تجربه خود در همکاری با اینفلوئنسرها را مشخص کنید</p>
+                
+                <div class="experience-options">
+                    <div class="radio-card">
+                        <input type="radio" name="experience" value="new" id="new">
+                        <label for="new">
+                            <span class="title">تازه شروع کرده‌ام</span>
+                            <span class="description">هنوز تجربه همکاری نداشته‌ام</span>
+                        </label>
+                    </div>
+                    <div class="radio-card">
+                        <input type="radio" name="experience" value="occasional" id="occasional">
+                        <label for="occasional">
+                            <span class="title">گاه‌گاهی</span>
+                            <span class="description">چند بار در سال همکاری می‌کنم</span>
+                        </label>
+                    </div>
+                    <div class="radio-card">
+                        <input type="radio" name="experience" value="regular" id="regular">
+                        <label for="regular">
+                            <span class="title">مرتب</span>
+                            <span class="description">به طور ماهانه همکاری می‌کنم</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            {% elif step == 4 %}
+            <div class="step-content">
+                <h2>نیاز ماهانه به محتوا</h2>
+                <p class="text-secondary mb-4">تعداد محتوای مورد نیاز ماهانه خود را مشخص کنید</p>
+                
+                <div class="content-needs-options">
+                    <div class="radio-card">
+                        <input type="radio" name="content_needs" value="0-5" id="needs1">
+                        <label for="needs1">۰ تا ۵ محتوا</label>
+                    </div>
+                    <div class="radio-card">
+                        <input type="radio" name="content_needs" value="5-10" id="needs2">
+                        <label for="needs2">۵ تا ۱۰ محتوا</label>
+                    </div>
+                    <div class="radio-card">
+                        <input type="radio" name="content_needs" value="10-20" id="needs3">
+                        <label for="needs3">۱۰ تا ۲۰ محتوا</label>
+                    </div>
+                    <div class="radio-card">
+                        <input type="radio" name="content_needs" value="20+" id="needs4">
+                        <label for="needs4">بیش از ۲۰ محتوا</label>
+                    </div>
+                </div>
+            </div>
+
+            {% elif step == 5 %}
+            <div class="step-content">
+                <h2>بودجه سالانه همکاری</h2>
+                <p class="text-secondary mb-4">بودجه سالانه خود برای همکاری با اینفلوئنسرها را مشخص کنید</p>
+                
+                <div class="budget-options">
+                    <div class="radio-card">
+                        <input type="radio" name="budget" value="under_1000" id="budget1">
+                        <label for="budget1">کمتر از ۱ میلیون تومان</label>
+                    </div>
+                    <div class="radio-card">
+                        <input type="radio" name="budget" value="1000_5000" id="budget2">
+                        <label for="budget2">۱ تا ۵ میلیون تومان</label>
+                    </div>
+                    <div class="radio-card">
+                        <input type="radio" name="budget" value="5000_10000" id="budget3">
+                        <label for="budget3">۵ تا ۱۰ میلیون تومان</label>
+                    </div>
+                    <div class="radio-card">
+                        <input type="radio" name="budget" value="10000_plus" id="budget4">
+                        <label for="budget4">بیش از ۱۰ میلیون تومان</label>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="form-actions">
+                {% if step > 1 %}
+                <button type="button" class="btn btn-outline-primary" onclick="window.history.back()">
+                    <i class="bi bi-arrow-right"></i>
+                    بازگشت
+                </button>
+                {% endif %}
+                
+                <button type="submit" class="btn btn-primary">
+                    {% if step == total_steps %}
+                    تکمیل ثبت‌نام
+                    {% else %}
+                    ادامه
+                    <i class="bi bi-arrow-left"></i>
+                    {% endif %}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Industry selection
+    const industryCards = document.querySelectorAll('.option-card');
+    const industryInput = document.getElementById('selectedIndustry');
+    
+    industryCards.forEach(card => {
+        card.addEventListener('click', function() {
+            industryCards.forEach(c => c.classList.remove('selected'));
+            this.classList.add('selected');
+            industryInput.value = this.dataset.value;
+        });
+    });
+
+    // Form validation
+    const form = document.getElementById('onboardingForm');
+    form.addEventListener('submit', function(e) {
+        let isValid = true;
+        
+        // Validate industry selection
+        if (industryInput && !industryInput.value) {
+            isValid = false;
+            alert('لطفاً صنعت خود را انتخاب کنید');
+        }
+        
+        // Validate category selection (minimum 1)
+        const categoryChecks = document.querySelectorAll('input[name="categories"]:checked');
+        if (categoryChecks.length && categoryChecks.length === 0) {
+            isValid = false;
+            alert('لطفاً حداقل یک دسته‌بندی را انتخاب کنید');
+        }
+        
+        // Validate radio selections
+        const radioGroups = ['experience', 'content_needs', 'budget'];
+        radioGroups.forEach(group => {
+            const radios = document.querySelectorAll(`input[name="${group}"]:checked`);
+            if (radios.length && radios.length === 0) {
+                isValid = false;
+                alert('لطفاً یک گزینه را انتخاب کنید');
+            }
+        });
+        
+        if (!isValid) {
+            e.preventDefault();
+        }
+    });
+});
+</script>
+{% endblock %}

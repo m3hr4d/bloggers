@@ -1,0 +1,58 @@
+{% extends "dashboard_base.html" %}
+
+{% block title %}Influencers{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-8">Influencers</h1>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for influencer in influencers %}
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <div class="flex items-center mb-4">
+                {% if influencer.profile_image %}
+                <img src="{{ influencer.profile_image }}" alt="{{ influencer.name }}" class="w-16 h-16 rounded-full object-cover">
+                {% else %}
+                <div class="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center">
+                    <span class="text-2xl text-gray-500">{{ influencer.name[:1] }}</span>
+                </div>
+                {% endif %}
+                <div class="ml-4">
+                    <h2 class="text-xl font-semibold">{{ influencer.name }}</h2>
+                    <p class="text-gray-600">{{ influencer.niche }}</p>
+                </div>
+            </div>
+            
+            <div class="mb-4">
+                <p class="text-gray-700">{{ influencer.bio[:150] }}...</p>
+            </div>
+            
+            <div class="mb-4">
+                <div class="flex items-center mb-2">
+                    <i class="fas fa-users text-gray-500 mr-2"></i>
+                    <span class="text-sm text-gray-600">{{ influencer.followers }} followers</span>
+                </div>
+                <div class="flex items-center mb-2">
+                    <i class="fas fa-chart-line text-gray-500 mr-2"></i>
+                    <span class="text-sm text-gray-600">{{ "%.1f"|format(influencer.engagement_rate|float) }}% engagement</span>
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-map-marker-alt text-gray-500 mr-2"></i>
+                    <span class="text-sm text-gray-600">{{ influencer.location }}</span>
+                </div>
+            </div>
+            
+            <div class="flex justify-between items-center">
+                <a href="{{ url_for('main.profile', user_id=influencer.id) }}" 
+                   class="text-blue-600 hover:text-blue-800">View Profile</a>
+                {% if current_user.is_business() %}
+                <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                    Contact
+                </button>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

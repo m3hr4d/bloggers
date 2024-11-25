@@ -1,0 +1,81 @@
+{% extends "dashboard_base.html" %}
+
+{% block title %}Travel Plans{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="flex justify-between items-center mb-8">
+        <h1 class="text-3xl font-bold">Travel Plans</h1>
+        {% if current_user.is_influencer() %}
+        <a href="{{ url_for('main.create_plan') }}" 
+           class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">
+            Create New Plan
+        </a>
+        {% endif %}
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for plan in plans %}
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <div class="p-6">
+                <div class="flex items-center mb-4">
+                    {% if plan.influencer.profile_image %}
+                    <img src="{{ plan.influencer.profile_image }}" 
+                         alt="{{ plan.influencer.name }}" 
+                         class="w-12 h-12 rounded-full object-cover">
+                    {% else %}
+                    <div class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center">
+                        <span class="text-xl text-gray-500">{{ plan.influencer.name[:1] }}</span>
+                    </div>
+                    {% endif %}
+                    <div class="ml-4">
+                        <h2 class="text-xl font-semibold">{{ plan.destination }}</h2>
+                        <p class="text-gray-600">by {{ plan.influencer.name }}</p>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-map-marker-alt text-gray-500 mr-2"></i>
+                        <span class="text-gray-700">{{ plan.location }}</span>
+                    </div>
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-calendar text-gray-500 mr-2"></i>
+                        <span class="text-gray-700">{{ plan.start_date }} - {{ plan.end_date }}</span>
+                    </div>
+                    {% if plan.time %}
+                    <div class="flex items-center">
+                        <i class="fas fa-clock text-gray-500 mr-2"></i>
+                        <span class="text-gray-700">{{ plan.time }}</span>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                {% if plan.services_requested %}
+                <div class="mb-4">
+                    <h3 class="text-sm font-semibold text-gray-600 mb-2">Services Requested:</h3>
+                    <p class="text-gray-700">{{ plan.services_requested }}</p>
+                </div>
+                {% endif %}
+                
+                <div class="flex justify-between items-center">
+                    <span class="px-3 py-1 rounded-full text-sm 
+                        {% if plan.status == 'draft' %}
+                            bg-gray-200 text-gray-700
+                        {% elif plan.status == 'published' %}
+                            bg-green-200 text-green-700
+                        {% else %}
+                            bg-blue-200 text-blue-700
+                        {% endif %}">
+                        {{ plan.status|title }}
+                    </span>
+                    
+                    <a href="{{ url_for('main.plan_detail', plan_id=plan.id) }}" 
+                       class="text-blue-600 hover:text-blue-800">View Details</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

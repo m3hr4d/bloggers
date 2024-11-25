@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Edit Business Profile</h5>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        {{ form.csrf_token }}
+                        
+                        <div class="mb-3">
+                            {{ form.business_name.label(class="form-label") }}
+                            {{ form.business_name(class="form-control") }}
+                            {% if form.business_name.errors %}
+                                {% for error in form.business_name.errors %}
+                                    <div class="text-danger">{{ error }}</div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.business_registration.label(class="form-label") }}
+                            {{ form.business_registration(class="form-control") }}
+                            {% if form.business_registration.errors %}
+                                {% for error in form.business_registration.errors %}
+                                    <div class="text-danger">{{ error }}</div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    {{ form.business_type.label(class="form-label") }}
+                                    {{ form.business_type(class="form-select") }}
+                                    {% if form.business_type.errors %}
+                                        {% for error in form.business_type.errors %}
+                                            <div class="text-danger">{{ error }}</div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    {{ form.industry.label(class="form-label") }}
+                                    {{ form.industry(class="form-select") }}
+                                    {% if form.industry.errors %}
+                                        {% for error in form.industry.errors %}
+                                            <div class="text-danger">{{ error }}</div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    {{ form.company_size.label(class="form-label") }}
+                                    {{ form.company_size(class="form-select") }}
+                                    {% if form.company_size.errors %}
+                                        {% for error in form.company_size.errors %}
+                                            <div class="text-danger">{{ error }}</div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    {{ form.founded_year.label(class="form-label") }}
+                                    {{ form.founded_year(class="form-control") }}
+                                    {% if form.founded_year.errors %}
+                                        {% for error in form.founded_year.errors %}
+                                            <div class="text-danger">{{ error }}</div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.business_description.label(class="form-label") }}
+                            {{ form.business_description(class="form-control", rows="4") }}
+                            {% if form.business_description.errors %}
+                                {% for error in form.business_description.errors %}
+                                    <div class="text-danger">{{ error }}</div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.services_offered.label(class="form-label") }}
+                            {{ form.services_offered(class="form-control", rows="4") }}
+                            {% if form.services_offered.errors %}
+                                {% for error in form.services_offered.errors %}
+                                    <div class="text-danger">{{ error }}</div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.service_locations.label(class="form-label") }}
+                            {{ form.service_locations(class="form-control") }}
+                            {% if form.service_locations.errors %}
+                                {% for error in form.service_locations.errors %}
+                                    <div class="text-danger">{{ error }}</div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.content_needs.label(class="form-label") }}
+                            <div class="row">
+                                {% for choice in form.content_needs %}
+                                    <div class="col-md-4 mb-2">
+                                        <div class="form-check">
+                                            {{ choice(class="form-check-input") }}
+                                            {{ choice.label(class="form-check-label") }}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            {% if form.content_needs.errors %}
+                                {% for error in form.content_needs.errors %}
+                                    <div class="text-danger">{{ error }}</div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.annual_budget.label(class="form-label") }}
+                            {{ form.annual_budget(class="form-select") }}
+                            {% if form.annual_budget.errors %}
+                                {% for error in form.annual_budget.errors %}
+                                    <div class="text-danger">{{ error }}</div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ url_for('profile.view_profile') }}" class="btn btn-secondary">Cancel</a>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

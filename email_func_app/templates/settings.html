@@ -1,30 +1,110 @@
-{% extends "base.html" %}
+{% extends "dashboard_base.html" %}
 
-{% block title %}تنظیمات{% endblock %}
+{% block title %}تنظیمات - بلاگرز{% endblock %}
+
+{% block breadcrumb %}تنظیمات{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/sections/settings/info.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/sections/settings/form.css') }}">
 {% endblock %}
 
-{% block dashboard_content %}
-<div class="settings-container">
-    <div class="settings-header">
-        <h1>تنظیمات حساب کاربری</h1>
-        <p>مدیریت اطلاعات و تنظیمات حساب کاربری</p>
+{% block content %}
+<!-- Profile Info -->
+<div class="section-card">
+    <div class="section-header">
+        <h2>اطلاعات پروفایل</h2>
+        <p class="section-description">اطلاعات اصلی پروفایل خود را مدیریت کنید</p>
     </div>
+    <div class="section-content">
+        <form method="POST" class="settings-form">
+            {{ profile_form.csrf_token }}
+            <div class="form-section">
+                <div class="form-group">
+                    {{ profile_form.location.label(class="form-label") }}
+                    {{ profile_form.location(class="form-control", placeholder="موقعیت مکانی") }}
+                </div>
 
-    <div class="settings-grid">
-        <!-- Info Section -->
-        <div class="settings-sidebar">
-            {% include 'sections/settings/info.html' %}
-        </div>
-        
-        <!-- Form Section -->
-        <div class="settings-main">
-            {% include 'sections/settings/form.html' %}
-        </div>
+                {% if current_user.user_type == 'influencer' %}
+                    <div class="form-group">
+                        {{ profile_form.phone_number.label(class="form-label") }}
+                        {{ profile_form.phone_number(class="form-control", placeholder="شماره تماس") }}
+                    </div>
+                    <div class="form-group">
+                        {{ profile_form.bio.label(class="form-label") }}
+                        {{ profile_form.bio(class="form-control", rows=4, placeholder="درباره خود بنویسید") }}
+                    </div>
+                    <div class="form-group">
+                        {{ profile_form.services_interested_in.label(class="form-label") }}
+                        {{ profile_form.services_interested_in(class="form-control", rows=3, placeholder="خدمات مورد علاقه") }}
+                    </div>
+                    <div class="form-group">
+                        {{ profile_form.instagram_profile.label(class="form-label") }}
+                        {{ profile_form.instagram_profile(class="form-control", placeholder="مثال: https://instagram.com/username یا @username") }}
+                        {% if profile_form.instagram_profile.description %}
+                            <small class="form-text text-muted">{{ profile_form.instagram_profile.description }}</small>
+                        {% endif %}
+                        {% if current_user.profile_image and current_user.profile_image.startswith('profile_pics/instagram_') %}
+                            <div class="mt-2">
+                                <img src="{{ url_for('static', filename=current_user.profile_image) }}" 
+                                     alt="تصویر پروفایل اینستاگرام" 
+                                     class="rounded-circle"
+                                     style="width: 64px; height: 64px; object-fit: cover;">
+                                <small class="text-muted d-block mt-1">تصویر پروفایل از اینستاگرام</small>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% else %}
+                    <div class="form-group">
+                        {{ profile_form.business_website.label(class="form-label") }}
+                        {{ profile_form.business_website(class="form-control", placeholder="آدرس وب‌سایت") }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" name="profile_submit" class="btn btn-primary">ذخیره تغییرات</button>
+            </div>
+        </form>
     </div>
 </div>
+
+<!-- Security Settings -->
+<div class="section-card">
+    <div class="section-header">
+        <h2>امنیت</h2>
+        <p class="section-description">تنظیمات امنیتی حساب کاربری خود را مدیریت کنید</p>
+    </div>
+    <div class="section-content">
+        <form method="POST" class="settings-form">
+            {{ security_form.csrf_token }}
+            <div class="form-section">
+                <div class="form-group">
+                    {{ security_form.current_password.label(class="form-label") }}
+                    {{ security_form.current_password(class="form-control", placeholder="رمز عبور فعلی") }}
+                </div>
+                <div class="form-group">
+                    {{ security_form.new_password.label(class="form-label") }}
+                    {{ security_form.new_password(class="form-control", placeholder="رمز عبور جدید") }}
+                </div>
+                <div class="form-group">
+                    {{ security_form.confirm_password.label(class="form-label") }}
+                    {{ security_form.confirm_password(class="form-control", placeholder="تکرار رمز عبور جدید") }}
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" name="security_submit" class="btn btn-primary">تغییر رمز عبور</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
 {% endblock %}

@@ -11,9 +11,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="بستن"></button>
                     </div>
                 {% endfor %}
-                <form method="post" id="registration-form" enctype="multipart/form-data">
-                    {{ form.hidden_tag() }}
-
+                <form method="POST" action="{{ url_for('auth.register') }}" id="registration-form" enctype="multipart/form-data">
                     <!-- Email Field -->
                     <div class="form-floating mb-3">
                         {{ form.email(class="form-control", id="email", placeholder="ایمیل") }}

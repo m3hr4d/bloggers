@@ -4,4 +4,24 @@
     src: url('../fonts/BYekan.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
+    font-display: swap;
+}
+
+/* Persian font stack */
+:root {
+    --font-primary: 'BYekan', 'Tahoma', 'Arial', sans-serif;
+}
+
+/* Apply font to all elements */
+* {
+    font-family: var(--font-primary);
+}
+
+/* Optimize font rendering */
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "kern" 1;
+    font-kerning: normal;
 }

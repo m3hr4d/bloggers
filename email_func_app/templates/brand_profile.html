@@ -1,0 +1,280 @@
+{% extends "dashboard_base.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pages/brand_profile.css') }}">
+{% endblock %}
+
+{% block breadcrumb %}پروفایل برند{% endblock %}
+
+{% block content %}
+<div class="brand-profile-container">
+    <div class="profile-header">
+        <h1>پروفایل برند</h1>
+        <div class="header-actions">
+            <button type="button" class="btn btn-reset">بازنشانی</button>
+            <button type="submit" form="brand-profile-form" class="btn btn-primary">ذخیره تغییرات</button>
+        </div>
+    </div>
+
+    <form id="brand-profile-form" class="profile-form" method="POST" enctype="multipart/form-data">
+        
+        <div class="profile-section">
+            <div class="profile-image-upload">
+                <div class="image-preview" id="image-preview">
+                    {% if current_user.profile_image %}
+                    <img src="{{ url_for('static', filename='profile_pics/' + current_user.profile_image) }}" alt="تصویر پروفایل">
+                    {% else %}
+                    <div class="placeholder-image">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="upload-controls">
+                    <label for="profile_image" class="btn btn-outline-primary">
+                        <i class="fas fa-upload"></i>
+                        آپلود تصویر
+                    </label>
+                    <input type="file" id="profile_image" name="profile_image" accept="image/*" class="hidden">
+                    <p class="upload-hint">حداکثر سایز: 2MB</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-section">
+            <div class="form-group">
+                <label for="brand_name">نام برند</label>
+                <input type="text" id="brand_name" name="brand_name" class="form-control" value="{{ current_user.business_name }}">
+            </div>
+
+            <div class="form-group">
+                <label for="location">موقعیت</label>
+                <input type="text" id="location" name="location" class="form-control" value="{{ current_user.location }}">
+            </div>
+
+            <div class="form-group">
+                <label for="about">درباره برند</label>
+                <div class="rich-text-toolbar">
+                    <button type="button" class="toolbar-btn" data-command="bold"><i class="fas fa-bold"></i></button>
+                    <button type="button" class="toolbar-btn" data-command="italic"><i class="fas fa-italic"></i></button>
+                    <button type="button" class="toolbar-btn" data-command="underline"><i class="fas fa-underline"></i></button>
+                    <button type="button" class="toolbar-btn" data-command="strikeThrough"><i class="fas fa-strikethrough"></i></button>
+                    <div class="toolbar-separator"></div>
+                    <button type="button" class="toolbar-btn" data-command="justifyLeft"><i class="fas fa-align-left"></i></button>
+                    <button type="button" class="toolbar-btn" data-command="justifyCenter"><i class="fas fa-align-center"></i></button>
+                    <button type="button" class="toolbar-btn" data-command="justifyRight"><i class="fas fa-align-right"></i></button>
+                    <div class="toolbar-separator"></div>
+                    <button type="button" class="toolbar-btn" data-command="insertUnorderedList"><i class="fas fa-list-ul"></i></button>
+                    <button type="button" class="toolbar-btn" data-command="insertOrderedList"><i class="fas fa-list-ol"></i></button>
+                </div>
+                <div id="about" class="rich-text-editor" contenteditable="true">{{ current_user.bio|safe }}</div>
+                <input type="hidden" name="about" id="about_hidden">
+            </div>
+        </div>
+
+        <div class="profile-section">
+            <h3>حوزه‌های فعالیت</h3>
+            
+            <div class="interests-section">
+                <h4>تفریح و سرگرمی</h4>
+                <div class="tags-container">
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Outdoors"> طبیعت‌گردی</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Photographer"> عکاسی</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Vape"> ویپ</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Sports"> ورزش</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Gambling"> قمار</div>
+                </div>
+            </div>
+
+            <div class="interests-section">
+                <h4>کسب و کار</h4>
+                <div class="tags-container">
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Software"> نرم‌افزار</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Finance"> مالی</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Real Estate"> املاک</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Marketing"> بازاریابی</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Events"> رویدادها</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="HR"> منابع انسانی</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Small Business"> کسب و کار کوچک</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Stock Market"> بازار سهام</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Crypto"> ارز دیجیتال</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="B2B"> B2B</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Live Shopping"> خرید زنده</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="E-Commerce"> تجارت الکترونیک</div>
+                </div>
+            </div>
+
+            <div class="interests-section">
+                <h4>خانواده</h4>
+                <div class="tags-container">
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Children's Clothing"> لباس کودک</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Baby"> نوزاد</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Pets"> حیوانات خانگی</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Parenting"> فرزندپروری</div>
+                </div>
+            </div>
+
+            <div class="interests-section">
+                <h4>تکنولوژی</h4>
+                <div class="tags-container">
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Video Games"> بازی‌های ویدیویی</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Cell Phones"> تلفن همراه</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Apps"> اپلیکیشن‌ها</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Hardware"> سخت‌افزار</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="SaaS"> نرم‌افزار به عنوان سرویس</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Gaming"> گیمینگ</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Web Hosting"> هاستینگ وب</div>
+                </div>
+            </div>
+
+            <div class="interests-section">
+                <h4>سلامتی و تندرستی</h4>
+                <div class="tags-container">
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Health"> سلامت</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Fitness"> تناسب اندام</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Yoga"> یوگا</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Wellness"> تندرستی</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Nutrition"> تغذیه</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Keto"> رژیم کتو</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Brain Health"> سلامت مغز</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Meditation"> مدیتیشن</div>
+                </div>
+            </div>
+
+            <div class="interests-section">
+                <h4>پوشاک</h4>
+                <div class="tags-container">
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Men's Clothing"> پوشاک مردانه</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Women's Clothing"> پوشاک زنانه</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Footwear"> کفش</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Streetwear"> استریت‌ویر</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Swimwear"> لباس شنا</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Lingerie"> لباس زیر</div>
+                </div>
+            </div>
+
+            <div class="interests-section">
+                <h4>زیبایی و مد</h4>
+                <div class="tags-container">
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Beauty"> زیبایی</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Fashion"> مد</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Hair"> مو</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Makeup"> آرایش</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Jewelry"> جواهرات</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Skincare"> مراقبت پوست</div>
+                </div>
+            </div>
+
+            <div class="interests-section">
+                <h4>غذا و نوشیدنی</h4>
+                <div class="tags-container">
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Food"> غذا</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Restaurant"> رستوران</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Coffee"> قهوه</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Beverage"> نوشیدنی</div>
+                </div>
+            </div>
+
+            <div class="interests-section">
+                <h4>سبک زندگی</h4>
+                <div class="tags-container">
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Lifestyle"> سبک زندگی</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Home"> خانه</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Travel"> سفر</div>
+                </div>
+            </div>
+
+            <div class="interests-section">
+                <h4>سرگرمی</h4>
+                <div class="tags-container">
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Music"> موسیقی</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Dance"> رقص</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Festivals"> جشنواره‌ها</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Art"> هنر</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Books"> کتاب</div>
+                </div>
+            </div>
+
+            <div class="interests-section">
+                <h4>خودرو</h4>
+                <div class="tags-container">
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Accessories"> لوازم جانبی</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Cars"> خودرو</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Motorcycles"> موتورسیکلت</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Rentals"> اجاره</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Trucks"> کامیون</div>
+                </div>
+            </div>
+
+            <div class="interests-section">
+                <h4>طب جایگزین</h4>
+                <div class="tags-container">
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Reiki"> ریکی</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Aromatherapy"> آروماتراپی</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="CBD"> CBD</div>
+                </div>
+            </div>
+
+            <div class="interests-section">
+                <h4>آموزش</h4>
+                <div class="tags-container">
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Education"> آموزش</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Online Courses"> دوره‌های آنلاین</div>
+                    <div class="tag-item"><input type="checkbox" name="interests" value="Self Help"> خودیاری</div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Rich text editor functionality
+    const toolbar = document.querySelector('.rich-text-toolbar');
+    const editor = document.querySelector('.rich-text-editor');
+    const form = document.getElementById('brand-profile-form');
+    const aboutHidden = document.getElementById('about_hidden');
+
+    toolbar.addEventListener('click', function(e) {
+        const button = e.target.closest('.toolbar-btn');
+        if (!button) return;
+
+        e.preventDefault();
+        const command = button.dataset.command;
+        document.execCommand(command, false, null);
+    });
+
+    // Update hidden input before form submission
+    form.addEventListener('submit', function() {
+        aboutHidden.value = editor.innerHTML;
+    });
+
+    // Image preview functionality
+    const imageInput = document.getElementById('profile_image');
+    const imagePreview = document.getElementById('image-preview');
+
+    imageInput.addEventListener('change', function() {
+        const file = this.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                imagePreview.innerHTML = `<img src="${e.target.result}" alt="تصویر پروفایل">`;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // Load saved interests
+    const savedInterests = JSON.parse('{{ current_user.interests|default("[]")|safe }}');
+    if (savedInterests) {
+        savedInterests.forEach(function(interest) {
+            const checkbox = document.querySelector(`input[name="interests"][value="${interest}"]`);
+            if (checkbox) {
+                checkbox.checked = true;
+            }
+        });
+    }
+});
+</script>
+{% endblock %}

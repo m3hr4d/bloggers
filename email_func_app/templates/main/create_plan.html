@@ -1,0 +1,105 @@
+{% extends "dashboard_base.html" %}
+
+{% block title %}Create Travel Plan{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="max-w-2xl mx-auto">
+        <h1 class="text-3xl font-bold mb-8">Create New Travel Plan</h1>
+        
+        <form method="POST" class="bg-white rounded-lg shadow-md p-6">
+            <div class="mb-6">
+                <label for="destination" class="block text-gray-700 text-sm font-bold mb-2">
+                    Destination *
+                </label>
+                <input type="text" name="destination" id="destination" required
+                       class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                       placeholder="Where are you planning to go?">
+            </div>
+            
+            <div class="mb-6">
+                <label for="location" class="block text-gray-700 text-sm font-bold mb-2">
+                    Specific Location *
+                </label>
+                <input type="text" name="location" id="location" required
+                       class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                       placeholder="Specific area or venue">
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <div>
+                    <label for="start_date" class="block text-gray-700 text-sm font-bold mb-2">
+                        Start Date *
+                    </label>
+                    <input type="date" name="start_date" id="start_date" required
+                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div>
+                    <label for="end_date" class="block text-gray-700 text-sm font-bold mb-2">
+                        End Date *
+                    </label>
+                    <input type="date" name="end_date" id="end_date" required
+                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+            </div>
+            
+            <div class="mb-6">
+                <label for="time" class="block text-gray-700 text-sm font-bold mb-2">
+                    Preferred Time
+                </label>
+                <input type="text" name="time" id="time"
+                       class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                       placeholder="e.g., Morning, Afternoon, Evening">
+            </div>
+            
+            <div class="mb-6">
+                <label for="services_requested" class="block text-gray-700 text-sm font-bold mb-2">
+                    Services Requested
+                </label>
+                <textarea name="services_requested" id="services_requested" rows="3"
+                          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                          placeholder="What kind of services are you looking for?"></textarea>
+            </div>
+            
+            <div class="mb-6">
+                <label for="topics_of_interest" class="block text-gray-700 text-sm font-bold mb-2">
+                    Topics of Interest
+                </label>
+                <textarea name="topics_of_interest" id="topics_of_interest" rows="3"
+                          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                          placeholder="What topics would you like to cover?"></textarea>
+            </div>
+            
+            <div class="flex items-center justify-between">
+                <button type="submit"
+                        class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline">
+                    Create Plan
+                </button>
+                <a href="{{ url_for('main.plans') }}"
+                   class="text-gray-600 hover:text-gray-800">
+                    Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Set minimum date to today
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('start_date').min = today;
+    document.getElementById('end_date').min = today;
+    
+    // Update end_date min when start_date changes
+    document.getElementById('start_date').addEventListener('change', function() {
+        document.getElementById('end_date').min = this.value;
+        if (document.getElementById('end_date').value < this.value) {
+            document.getElementById('end_date').value = this.value;
+        }
+    });
+});
+</script>
+{% endblock %}
+{% endblock %}

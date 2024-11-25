@@ -9,34 +9,86 @@
 {% block content %}
 <div class="auth-container">
     <div class="auth-box">
-        <h1>ورود به حساب کاربری</h1>
+        <div class="text-center mb-4">
+            <i class="fas fa-user-circle" style="font-size: 48px; color: var(--primary-color); margin-bottom: var(--space-md);"></i>
+            <h1>ورود به حساب کاربری</h1>
+            <p style="color: var(--text-secondary);">به جامعه بلاگرز خوش آمدید</p>
+        </div>
         
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
-                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                    <div class="alert alert-{{ category }}">
+                        {% if category == 'danger' %}
+                            <i class="fas fa-exclamation-circle me-2"></i>
+                        {% elif category == 'success' %}
+                            <i class="fas fa-check-circle me-2"></i>
+                        {% endif %}
+                        {{ message }}
+                    </div>
                 {% endfor %}
             {% endif %}
         {% endwith %}
         
         <form method="POST" action="{{ url_for('auth.login') }}">
+            {{ form.csrf_token }}
             <div class="form-group">
-                <label for="email" class="form-label">ایمیل</label>
-                <input type="email" name="email" id="email" class="form-control" placeholder="example@email.com" required>
+                <label for="email" class="form-label">
+                    <i class="fas fa-envelope me-2" style="color: var(--primary-color);"></i>
+                    {{ form.email.label.text }}
+                </label>
+                {{ form.email(class="form-control", placeholder="example@email.com", required=true, autocomplete="email") }}
+                {% if form.email.errors %}
+                    {% for error in form.email.errors %}
+                        <div class="invalid-feedback d-block">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
             </div>
+            
             <div class="form-group">
-                <label for="password" class="form-label">رمز عبور</label>
-                <input type="password" name="password" id="password" class="form-control" placeholder="رمز عبور خود را وارد کنید" required>
+                <label for="password" class="form-label">
+                    <i class="fas fa-lock me-2" style="color: var(--primary-color);"></i>
+                    {{ form.password.label.text }}
+                </label>
+                {{ form.password(class="form-control", required=true, autocomplete="current-password") }}
+                {% if form.password.errors %}
+                    {% for error in form.password.errors %}
+                        <div class="invalid-feedback d-block">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
             </div>
-            <div class="d-grid">
-                <button type="submit" class="btn btn-primary">ورود به حساب کاربری</button>
+            
+            <div class="form-group form-check">
+                {{ form.remember(class="form-check-input") }}
+                <label class="form-check-label" for="remember">
+                    {{ form.remember.label.text }}
+                </label>
             </div>
+            
+            <button type="submit" class="btn btn-primary w-100">
+                <i class="fas fa-sign-in-alt me-2"></i>
+                ورود
+            </button>
         </form>
-        <div class="mt-3 text-center">
-            <small>
-                حساب کاربری ندارید؟ <a href="{{ url_for('auth.register') }}">ثبت نام کنید</a>
-            </small>
+        
+        <div class="text-center mt-4">
+            <p>حساب کاربری ندارید؟ <a href="{{ url_for('auth.register') }}" class="text-primary">ثبت نام کنید</a></p>
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Add animation to form submission
+    const form = document.querySelector('form');
+    const submitBtn = form.querySelector('button[type="submit"]');
+    
+    form.addEventListener('submit', function() {
+        submitBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin me-2"></i> در حال ورود...';
+        submitBtn.disabled = true;
+    });
+});
+</script>
 {% endblock %}

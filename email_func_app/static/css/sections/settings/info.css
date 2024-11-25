@@ -1,204 +1,199 @@
-/* Settings Info Section */
+/* Profile Info Section */
 .info-section {
-  animation: fadeIn 0.5s ease-out;
+    padding: 24px;
 }
 
-/* Info Card */
-.info-card {
-  background: var(--background-primary);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
-  border: 1px solid var(--border-color);
-  overflow: hidden;
-  transition: var(--transition);
-}
-
-.info-card:hover {
-  box-shadow: var(--shadow-md);
-}
-
-/* Info Header */
 .info-header {
-  padding: 2rem;
-  text-align: center;
-  border-bottom: 1px solid var(--border-color);
-  background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
-  color: white;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
 }
 
 .info-avatar {
-  width: 80px;
-  height: 80px;
-  margin: 0 auto 1rem;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: var(--transition);
+    width: 64px;
+    height: 64px;
+    background: #f0f7ff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .info-avatar i {
-  font-size: 2.5rem;
-  color: white;
+    font-size: 32px;
+    color: #0069ff;
 }
 
 .info-title h2 {
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin: 0 0 0.5rem;
+    font-size: 18px;
+    font-weight: 600;
+    color: #111827;
+    margin: 0 0 4px 0;
 }
 
 .info-badge {
-  display: inline-block;
-  padding: 0.25rem 0.75rem;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: var(--radius-sm);
-  font-size: 0.75rem;
-  font-weight: 500;
+    display: inline-block;
+    padding: 4px 12px;
+    background: #f0f7ff;
+    color: #0069ff;
+    border-radius: 16px;
+    font-size: 12px;
+    font-weight: 500;
 }
 
 /* Info Content */
 .info-content {
-  padding: 1.5rem;
+    display: grid;
+    gap: 20px;
 }
 
 .info-group {
-  margin-bottom: 1.25rem;
-  padding-bottom: 1.25rem;
-  border-bottom: 1px solid var(--border-color);
-  animation: slideIn 0.5s ease-out;
-}
-
-.info-group:last-child {
-  margin-bottom: 0;
-  padding-bottom: 0;
-  border-bottom: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
 
 .info-group label {
-  display: block;
-  color: var(--text-secondary);
-  font-size: 0.875rem;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
+    font-size: 12px;
+    color: #6b7280;
 }
 
 .info-group p {
-  color: var(--text-primary);
-  font-size: 1rem;
-  margin: 0;
-  font-weight: 500;
+    font-size: 14px;
+    color: #111827;
+    margin: 0;
 }
 
-.info-group p:empty::after {
-  content: 'تنظیم نشده';
-  color: var(--text-secondary);
-  font-style: italic;
-  font-weight: normal;
-}
-
-/* Info Footer */
-.info-footer {
-  padding: 1.5rem;
-  background: var(--background-secondary);
-  border-top: 1px solid var(--border-color);
-}
-
+/* Info Stats */
 .info-stats {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 1rem;
-  text-align: center;
+    display: flex;
+    gap: 24px;
+    padding-top: 24px;
+    margin-top: 24px;
+    border-top: 1px solid #e5e7eb;
 }
 
 .stat-item {
-  padding: 1rem;
-  background: var(--background-primary);
-  border-radius: var(--radius-md);
-  transition: var(--transition);
-}
-
-.stat-item:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
 }
 
 .stat-value {
-  display: block;
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--primary-color);
-  margin-bottom: 0.25rem;
+    font-size: 18px;
+    font-weight: 600;
+    color: #111827;
 }
 
 .stat-label {
-  display: block;
-  font-size: 0.75rem;
-  color: var(--text-secondary);
+    font-size: 12px;
+    color: #6b7280;
 }
 
-/* Animations */
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateX(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+/* Section Card */
+.section-card {
+    background: white;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    margin-bottom: 24px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-@keyframes slideInRTL {
-  from {
-    opacity: 0;
-    transform: translateX(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+.section-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.section-header h2 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 0 0 4px 0;
+}
+
+.section-description {
+    font-size: 14px;
+    color: #6b7280;
+    margin: 0;
+}
+
+.section-content {
+    padding: 24px;
+}
+
+/* Links and Buttons */
+.btn-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #0069ff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.btn-link i {
+    font-size: 16px;
+}
+
+.btn-link:hover {
+    text-decoration: underline;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .info-header {
-    padding: 1.5rem;
-  }
+    .info-header {
+        flex-direction: column;
+        text-align: center;
+    }
 
-  .info-avatar {
-    width: 60px;
-    height: 60px;
-  }
+    .info-stats {
+        justify-content: center;
+    }
 
-  .info-avatar i {
-    font-size: 2rem;
-  }
+    .info-content {
+        gap: 16px;
+    }
 
-  .info-content,
-  .info-footer {
-    padding: 1rem;
-  }
-
-  .info-stats {
-    grid-template-columns: 1fr;
-  }
-
-  .stat-item {
-    padding: 0.75rem;
-  }
+    .section-content {
+        padding: 16px;
+    }
 }
 
-/* RTL Support */
-[dir="rtl"] .info-group {
-  text-align: right;
-}
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+    .section-card {
+        background: #1f2937;
+        border-color: #374151;
+    }
 
-[dir="rtl"] .info-group label {
-  text-align: right;
-}
+    .section-header {
+        border-color: #374151;
+    }
 
-[dir="rtl"] .info-group {
-  animation: slideInRTL 0.5s ease-out;
+    .info-badge {
+        background: rgba(0, 105, 255, 0.1);
+    }
+
+    .info-group label {
+        color: #9ca3af;
+    }
+
+    .info-group p {
+        color: #f3f4f6;
+    }
+
+    .stat-value {
+        color: #f3f4f6;
+    }
+
+    .stat-label {
+        color: #9ca3af;
+    }
+
+    .info-stats {
+        border-color: #374151;
+    }
 }

@@ -1,0 +1,128 @@
+/* Auth Container */
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: var(--background-secondary);
+}
+
+/* Auth Box */
+.auth-box {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    background: var(--background-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    box-shadow: var(--shadow-sm);
+}
+
+/* Header Section */
+.auth-box .text-center {
+    margin-bottom: 24px;
+}
+
+.auth-box h1 {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.auth-box p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 0;
+}
+
+/* Icon Styles */
+.auth-box i {
+    font-size: 20px;
+}
+
+/* Form Section */
+.register-form {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.register-form.active {
+    display: block;
+    opacity: 1;
+}
+
+/* Footer Links */
+.auth-box .mt-4 {
+    margin-top: 24px !important;
+}
+
+.auth-box a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.auth-box a:hover {
+    text-decoration: underline;
+}
+
+/* Divider */
+.divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 16px 0;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.divider span {
+    padding: 0 16px;
+    color: var(--text-secondary);
+    font-size: 12px;
+}
+
+/* Social Login Buttons */
+.social-login {
+    display: grid;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+/* Mobile Optimizations */
+@media (max-width: 480px) {
+    .auth-container {
+        padding: 16px;
+        background: var(--background-primary);
+    }
+
+    .auth-box {
+        box-shadow: none;
+        border: none;
+        padding: 0;
+    }
+
+    .auth-box h1 {
+        font-size: 20px;
+    }
+
+    .auth-box p {
+        font-size: 14px;
+    }
+}
+
+/* Tablet and Larger */
+@media (min-width: 768px) {
+    .auth-box {
+        padding: 32px;
+    }
+}

@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Notification Preferences</h5>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        {{ form.csrf_token }}
+                        
+                        <div class="mb-4">
+                            <h6 class="mb-3">Communication Channels</h6>
+                            <div class="form-check mb-2">
+                                {{ form.email_notifications(class="form-check-input") }}
+                                {{ form.email_notifications.label(class="form-check-label") }}
+                                <small class="text-muted d-block">Receive notifications via email</small>
+                            </div>
+                            <div class="form-check mb-2">
+                                {{ form.sms_notifications(class="form-check-input") }}
+                                {{ form.sms_notifications.label(class="form-check-label") }}
+                                <small class="text-muted d-block">Receive notifications via SMS</small>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <h6 class="mb-3">Notification Types</h6>
+                            <div class="form-check mb-2">
+                                {{ form.new_offers(class="form-check-input") }}
+                                {{ form.new_offers.label(class="form-check-label") }}
+                                <small class="text-muted d-block">Get notified about new collaboration offers</small>
+                            </div>
+                            <div class="form-check mb-2">
+                                {{ form.messages(class="form-check-input") }}
+                                {{ form.messages.label(class="form-check-label") }}
+                                <small class="text-muted d-block">Get notified about new messages</small>
+                            </div>
+                            <div class="form-check mb-2">
+                                {{ form.campaign_updates(class="form-check-input") }}
+                                {{ form.campaign_updates.label(class="form-check-label") }}
+                                <small class="text-muted d-block">Get notified about campaign status updates</small>
+                            </div>
+                            <div class="form-check mb-2">
+                                {{ form.marketing_emails(class="form-check-input") }}
+                                {{ form.marketing_emails.label(class="form-check-label") }}
+                                <small class="text-muted d-block">Receive marketing and promotional emails</small>
+                            </div>
+                        </div>
+
+                        <div class="alert alert-info" role="alert">
+                            <i class="bi bi-info-circle me-2"></i>
+                            You can change these preferences at any time. We'll always send you important account-related notifications.
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ url_for('profile.view_profile') }}" class="btn btn-secondary">Cancel</a>
+                            <button type="submit" class="btn btn-primary">Save Preferences</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

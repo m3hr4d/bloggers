@@ -1,46 +1,70 @@
+/* Audience Section */
 .audience {
-    padding: 6rem 0;
+    padding: var(--space-4xl) 0;
+    background: var(--background-secondary);
     text-align: center;
-    background-color: #f8f9fa;
+}
+
+.audience .container {
+    max-width: 1000px;
 }
 
 .audience h2 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    color: var(--dark);
-    font-weight: bold;
+    font-size: var(--font-size-3xl);
+    color: var(--text-primary);
+    margin-bottom: var(--space-sm);
 }
 
 .audience > .container > p {
-    font-size: 1.2rem;
-    margin-bottom: 4rem;
-    color: var(--gray);
+    font-size: var(--font-size-xl);
+    color: var(--text-secondary);
+    margin-bottom: var(--space-3xl);
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
 }
 
+/* Audience Groups */
 .audience-groups {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
-    max-width: 1000px;
-    margin: 0 auto;
+    gap: var(--space-2xl);
+    margin-top: var(--space-2xl);
 }
 
 .group {
-    background: white;
-    padding: 2rem;
-    border-radius: 1rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    background: var(--background-primary);
+    border-radius: var(--radius-lg);
+    padding: var(--space-2xl);
     text-align: right;
+    border: 1px solid var(--border-color);
+    transition: var(--transition);
+}
+
+.group:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-color);
+    background: var(--background-gradient-light);
 }
 
 .group h3 {
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
-    color: var(--primary);
-    font-weight: bold;
+    font-size: var(--font-size-2xl);
+    color: var(--text-primary);
+    margin-bottom: var(--space-xl);
+    position: relative;
+    display: inline-block;
+}
+
+.group h3::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    right: 0;
+    width: 50px;
+    height: 3px;
+    background: var(--primary-color);
+    border-radius: 2px;
 }
 
 .group ul {
@@ -49,19 +73,123 @@
     margin: 0;
 }
 
-.group li {
-    padding: 0.75rem 1.5rem 0.75rem 0;
-    color: var(--gray);
+.group ul li {
+    font-size: var(--font-size-lg);
+    color: var(--text-secondary);
+    margin-bottom: var(--space-md);
     position: relative;
-    font-size: 1.1rem;
+    padding-right: var(--space-xl);
 }
 
-.group li::before {
-    content: "•";
-    color: var(--primary);
+.group ul li::before {
+    content: '';
     position: absolute;
     right: 0;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 1.2rem;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--primary-color);
+}
+
+/* Animation */
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.audience-groups .group:first-child {
+    animation: slideInRight 0.6s ease-out forwards;
+}
+
+.audience-groups .group:last-child {
+    animation: slideInLeft 0.6s ease-out forwards;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .audience {
+        padding: var(--space-3xl) 0;
+    }
+
+    .group {
+        padding: var(--space-xl);
+    }
+
+    .group h3 {
+        font-size: var(--font-size-xl);
+        margin-bottom: var(--space-lg);
+    }
+
+    .group ul li {
+        font-size: var(--font-size-base);
+        margin-bottom: var(--space-sm);
+    }
+}
+
+@media (max-width: 768px) {
+    .audience-groups {
+        grid-template-columns: 1fr;
+        gap: var(--space-xl);
+    }
+
+    .audience h2 {
+        font-size: var(--font-size-2xl);
+    }
+
+    .audience > .container > p {
+        font-size: var(--font-size-lg);
+        margin-bottom: var(--space-2xl);
+    }
+
+    .group {
+        padding: var(--space-lg);
+    }
+}
+
+@media (max-width: 576px) {
+    .audience {
+        padding: var(--space-2xl) 0;
+    }
+
+    .group h3 {
+        font-size: var(--font-size-lg);
+    }
+
+    .group ul li {
+        font-size: var(--font-size-base);
+    }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    .audience-groups .group {
+        animation: none;
+        opacity: 1;
+    }
+}
+
+/* High DPI Screens */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .group {
+        border-width: 0.5px;
+    }
 }

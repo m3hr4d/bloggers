@@ -1,0 +1,245 @@
+{% extends "dashboard_base.html" %}
+
+{% block title %}{{ message.subject }}{% endblock %}
+
+{% block breadcrumb %}
+<a href="{{ url_for('main.messages') }}">پیام‌ها</a> / مشاهده پیام
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-card">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2>{{ message.subject }}</h2>
+            {% if message.is_ticket %}
+                <div class="ticket-status-controls mt-2">
+                    <div class="btn-group">
+                        <button class="btn btn-sm {% if message.status == 'pending' %}btn-warning active{% else %}btn-outline-warning{% endif %}"
+                                onclick="updateStatus('pending')">در انتظار بررسی</button>
+                        <button class="btn btn-sm {% if message.status == 'in_progress' %}btn-info active{% else %}btn-outline-info{% endif %}"
+                                onclick="updateStatus('in_progress')">در حال بررسی</button>
+                        <button class="btn btn-sm {% if message.status == 'resolved' %}btn-success active{% else %}btn-outline-success{% endif %}"
+                                onclick="updateStatus('resolved')">حل شده</button>
+                        <button class="btn btn-sm {% if message.status == 'closed' %}btn-secondary active{% else %}btn-outline-secondary{% endif %}"
+                                onclick="updateStatus('closed')">بسته شده</button>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        <a href="{{ url_for('main.messages') }}" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left"></i> بازگشت
+        </a>
+    </div>
+    
+    <div class="message-thread">
+        {% for thread_message in message.get_thread() %}
+            <div class="message-item {% if thread_message.sender_id == current_user.id %}sent{% else %}received{% endif %}">
+                <div class="message-header">
+                    <div class="message-sender">
+                        <img src="{{ thread_message.sender_user.profile_image or url_for('static', filename='images/default-avatar.png') }}" 
+                             alt="{{ thread_message.sender_user.name }}" class="avatar">
+                        <div class="sender-info">
+                            <span class="sender-name">{{ thread_message.sender_user.name }}</span>
+                            <span class="message-time">{{ thread_message.created_at.strftime('%Y-%m-%d %H:%M') }}</span>
+                        </div>
+                    </div>
+                    {% if thread_message.status != 'closed' and not thread_message.parent_id %}
+                        <div class="message-status {{ thread_message.status }}">
+                            {{ thread_message.status|replace('_', ' ')|title }}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="message-content">
+                    <p style="white-space: pre-wrap;">{{ thread_message.body }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    
+    {% if message.status != 'closed' %}
+        <div class="reply-form mt-4">
+            <form method="POST" action="{{ url_for('main.reply_message', message_id=message.id) }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <div class="form-group">
+                    <label for="reply" class="form-label">پاسخ شما</label>
+                    <textarea class="form-control" id="reply" name="body" rows="4" required></textarea>
+                </div>
+                <div class="mt-3">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-reply"></i> ارسال پاسخ
+                    </button>
+                </div>
+            </form>
+        </div>
+    {% else %}
+        <div class="text-center py-4 mt-4 border-top">
+            <p class="text-muted">این مکالمه بسته شده است</p>
+        </div>
+    {% endif %}
+</div>
+
+<style>
+.message-thread {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.message-item {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    max-width: 80%;
+}
+
+.message-item.received {
+    margin-right: auto;
+    background-color: #f8f9fa;
+}
+
+.message-item.sent {
+    margin-left: auto;
+    background-color: #e3f2fd;
+}
+
+.message-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.message-sender {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.sender-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.sender-name {
+    font-weight: 600;
+    color: #212529;
+}
+
+.message-time {
+    font-size: 0.75rem;
+    color: #6c757d;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.message-content {
+    color: #212529;
+    line-height: 1.6;
+}
+
+.message-status {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+.message-status.pending {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.message-status.in_progress {
+    background-color: #cce5ff;
+    color: #004085;
+}
+
+.message-status.resolved {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.ticket-status-controls {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.ticket-status-controls .btn-group {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.ticket-status-controls .btn {
+    border: none;
+    font-size: 0.875rem;
+    padding: 0.375rem 0.75rem;
+}
+
+.reply-form {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 1.5rem;
+}
+
+.form-label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.form-control {
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    padding: 0.75rem;
+    font-size: 0.875rem;
+}
+
+.form-control:focus {
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 0.25rem rgba(13,110,253,.25);
+}
+
+.btn-outline-secondary {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-primary {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+</style>
+
+<script>
+function updateStatus(status) {
+    fetch(`{{ url_for('main.update_message_status', message_id=message.id) }}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': '{{ csrf_token() }}'
+        },
+        body: JSON.stringify({ status: status })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            location.reload();
+        } else {
+            alert('خطا در بروزرسانی وضعیت');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('خطا در بروزرسانی وضعیت');
+    });
+}
+</script>
+{% endblock %}

@@ -1,0 +1,144 @@
+/* Primary Button */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    height: 32px;
+}
+
+.btn:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+.btn i {
+    margin-left: 8px;
+    font-size: 14px;
+}
+
+/* Primary Button */
+.btn-primary {
+    color: #fff;
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-primary:hover:not(:disabled) {
+    background-color: var(--primary-hover);
+    border-color: var(--primary-hover);
+}
+
+.btn-primary:focus {
+    box-shadow: 0 0 0 3px rgba(0, 105, 255, 0.3);
+}
+
+/* Secondary Button */
+.btn-secondary {
+    color: var(--text-primary);
+    background-color: var(--background-secondary);
+    border-color: var(--border-color);
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background-color: var(--background-tertiary);
+}
+
+.btn-secondary:focus {
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Button Sizes */
+.btn-sm {
+    padding: 4px 12px;
+    font-size: 12px;
+    height: 28px;
+}
+
+.btn-lg {
+    padding: 8px 24px;
+    font-size: 16px;
+    height: 40px;
+}
+
+/* Full Width Button */
+.d-grid {
+    display: grid;
+    gap: 8px;
+}
+
+.d-grid .btn {
+    width: 100%;
+}
+
+/* Button Groups */
+.btn-group {
+    display: inline-flex;
+    vertical-align: middle;
+}
+
+.btn-group > .btn {
+    position: relative;
+    flex: 1 1 auto;
+}
+
+.btn-group > .btn:not(:first-child) {
+    margin-right: -1px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.btn-group > .btn:not(:last-child) {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+/* Loading State */
+.btn.loading {
+    position: relative;
+    color: transparent !important;
+    pointer-events: none;
+}
+
+.btn.loading::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 50%;
+    left: 50%;
+    margin: -8px 0 0 -8px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 0.8s infinite linear;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Mobile Optimizations */
+@media (max-width: 480px) {
+    .btn {
+        font-size: 14px;
+        padding: 4px 12px;
+    }
+
+    .btn-lg {
+        font-size: 14px;
+        padding: 6px 16px;
+    }
+}

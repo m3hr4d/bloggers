@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Edit Influencer Profile</h5>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        {{ form.csrf_token }}
+                        
+                        <div class="mb-3">
+                            {{ form.niche.label(class="form-label") }}
+                            {{ form.niche(class="form-control") }}
+                            {% if form.niche.errors %}
+                                {% for error in form.niche.errors %}
+                                    <div class="text-danger">{{ error }}</div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.interests.label(class="form-label") }}
+                            {{ form.interests(class="form-control", rows="4") }}
+                            {% if form.interests.errors %}
+                                {% for error in form.interests.errors %}
+                                    <div class="text-danger">{{ error }}</div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.collaboration_types.label(class="form-label") }}
+                            <div class="row">
+                                {% for choice in form.collaboration_types %}
+                                    <div class="col-md-4 mb-2">
+                                        <div class="form-check">
+                                            {{ choice(class="form-check-input") }}
+                                            {{ choice.label(class="form-check-label") }}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            {% if form.collaboration_types.errors %}
+                                {% for error in form.collaboration_types.errors %}
+                                    <div class="text-danger">{{ error }}</div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.preferred_categories.label(class="form-label") }}
+                            <div class="row">
+                                {% for choice in form.preferred_categories %}
+                                    <div class="col-md-4 mb-2">
+                                        <div class="form-check">
+                                            {{ choice(class="form-check-input") }}
+                                            {{ choice.label(class="form-check-label") }}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            {% if form.preferred_categories.errors %}
+                                {% for error in form.preferred_categories.errors %}
+                                    <div class="text-danger">{{ error }}</div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.min_budget.label(class="form-label") }}
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                {{ form.min_budget(class="form-control") }}
+                            </div>
+                            {% if form.min_budget.errors %}
+                                {% for error in form.min_budget.errors %}
+                                    <div class="text-danger">{{ error }}</div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <!-- Social Media Accounts -->
+                        <div class="mb-3">
+                            <label class="form-label">Social Media Accounts</label>
+                            <div id="social-accounts">
+                                {% for account_form in form.social_accounts %}
+                                    <div class="social-account-item card mb-3">
+                                        <div class="card-body">
+                                            <div class="mb-3">
+                                                {{ account_form.platform.label(class="form-label") }}
+                                                {{ account_form.platform(class="form-select") }}
+                                            </div>
+                                            <div class="mb-3">
+                                                {{ account_form.username.label(class="form-label") }}
+                                                {{ account_form.username(class="form-control") }}
+                                            </div>
+                                            <div class="mb-3">
+                                                {{ account_form.profile_url.label(class="form-label") }}
+                                                {{ account_form.profile_url(class="form-control") }}
+                                            </div>
+                                            <button type="button" class="btn btn-danger btn-sm remove-account">Remove</button>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <button type="button" class="btn btn-outline-primary btn-sm" id="add-account">
+                                <i class="bi bi-plus"></i> Add Social Media Account
+                            </button>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ url_for('profile.view_profile') }}" class="btn btn-secondary">Cancel</a>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const socialAccounts = document.getElementById('social-accounts');
+    const addAccountBtn = document.getElementById('add-account');
+    
+    // Add new social media account form
+    addAccountBtn.addEventListener('click', function() {
+        const template = document.querySelector('.social-account-item').cloneNode(true);
+        template.querySelectorAll('input, select').forEach(input => {
+            input.value = '';
+        });
+        socialAccounts.appendChild(template);
+    });
+    
+    // Remove social media account form
+    socialAccounts.addEventListener('click', function(e) {
+        if (e.target.classList.contains('remove-account')) {
+            const accountItem = e.target.closest('.social-account-item');
+            if (socialAccounts.children.length > 1) {
+                accountItem.remove();
+            }
+        }
+    });
+});
+</script>
+{% endblock %}
+
+{% endblock %}

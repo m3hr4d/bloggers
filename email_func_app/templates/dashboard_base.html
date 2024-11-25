@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#2563eb">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>{% block title %}بلاگرز{% endblock %}</title>
+    
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/fonts.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.rtl.min.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
+    <!-- Dashboard Core CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard_modern.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sections/dashboard/stats.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sections/dashboard/actions.css') }}">
+    
+    <!-- Page Specific CSS -->
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="user-type-{{ current_user.user_type }}">
+    <div class="dashboard-container">
+        <!-- Include Sidebar -->
+        {% include 'sections/dashboard/sidebar.html' %}
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Top Navigation -->
+            <div class="top-nav">
+                <div class="breadcrumb">
+                    <a href="{{ url_for('main.dashboard') }}" class="breadcrumb-item">
+                        <i class="fas fa-home"></i>
+                        <span>{% block breadcrumb %}داشبورد{% endblock %}</span>
+                    </a>
+                </div>
+                <div class="user-menu">
+                    <div class="user-avatar">
+                        {% if current_user.user_type == 'influencer' and current_user.profile_image %}
+                            <img src="{{ url_for('static', filename=current_user.profile_image) }}" 
+                                 alt="تصویر پروفایل" 
+                                 class="profile-image">
+                        {% else %}
+                            <img src="{{ url_for('static', filename='images/default-profile.png') }}" 
+                                 alt="تصویر پیش‌فرض" 
+                                 class="profile-image">
+                        {% endif %}
+                    </div>
+                    <div class="user-info">
+                        <span class="user-name">{{ current_user.name or current_user.business_name }}</span>
+                        <span class="user-type">{{ 'اینفلوئنسر' if current_user.user_type == 'influencer' else 'کسب و کار' }}</span>
+                    </div>
+                    <div class="user-actions">
+                        <a href="{{ url_for('main.settings') }}" class="action-button secondary">
+                            <i class="fas fa-cog"></i>
+                        </a>
+                        <a href="{{ url_for('auth.logout') }}" class="action-button primary">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>خروج</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="content-wrapper">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Core JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+    <script>
+        // Set CSRF token for AJAX requests
+        $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token() }}");
+                }
+            }
+        });
+        
+        // Mobile navigation toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            let lastScrollTop = 0;
+            const sidebar = document.querySelector('.sidebar');
+            
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                
+                if (window.innerWidth < 1024) {  // Only on mobile
+                    if (scrollTop > lastScrollTop) {
+                        // Scrolling down
+                        sidebar.classList.add('sidebar-hidden');
+                    } else {
+                        // Scrolling up
+                        sidebar.classList.remove('sidebar-hidden');
+                    }
+                    lastScrollTop = scrollTop;
+                }
+            });
+        });
+    </script>
+    
+    <!-- Page Specific JavaScript -->
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

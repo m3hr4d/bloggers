@@ -4,21 +4,21 @@
         <p>بلاگرز: پلی میان اینفلوئنسرها و برندها برای ایجاد همکاری‌های موفق و سودمند با پایه دنیای دیجیتال حرفه‌ای وارد شوید.</p>
         
         <div class="hero-cards">
-            <div class="card">
+            <a href="{{ url_for('main.influencers') }}" class="card">
                 <div class="icon">
-                    <i class="bi bi-phone"></i>
+                    <i class="fas fa-mobile-alt"></i>
                 </div>
                 <h3>اینفلوئنسرها</h3>
                 <p>همکاری با برندها و رشد کنید</p>
-            </div>
+            </a>
             
-            <div class="card">
+            <a href="{{ url_for('main.businesses') }}" class="card">
                 <div class="icon">
-                    <i class="bi bi-shop"></i>
+                    <i class="fas fa-store"></i>
                 </div>
                 <h3>برندها</h3>
                 <p>همکاری با اینفلوئنسرها و تبلیغات</p>
-            </div>
+            </a>
         </div>
 
         <div class="stats">

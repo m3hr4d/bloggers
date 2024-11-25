@@ -1,0 +1,313 @@
+/* Brand Profile Page Styles - DigitalOcean Theme */
+.brand-profile-container {
+    padding: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.profile-header h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #0c1c2c;
+    margin: 0;
+}
+
+.header-actions {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.profile-section {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+/* Profile Image Upload */
+.profile-image-upload {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+}
+
+.image-preview {
+    width: 120px;
+    height: 120px;
+    border-radius: 6px;
+    overflow: hidden;
+    background: #f9fafb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #e5e7eb;
+}
+
+.image-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.placeholder-image {
+    color: #9ca3af;
+    font-size: 2.5rem;
+}
+
+.upload-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.upload-hint {
+    color: #6b7280;
+    font-size: 0.875rem;
+    margin: 0;
+}
+
+/* Form Elements */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #374151;
+    font-size: 0.875rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.625rem 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    transition: all 0.15s ease-in-out;
+    color: #1f2937;
+}
+
+.form-control:focus {
+    border-color: #00a6eb;
+    box-shadow: 0 0 0 3px rgba(0, 166, 235, 0.1);
+    outline: none;
+}
+
+/* Rich Text Editor */
+.rich-text-toolbar {
+    display: flex;
+    gap: 0.25rem;
+    padding: 0.5rem;
+    background: #f9fafb;
+    border: 1px solid #d1d5db;
+    border-bottom: none;
+    border-radius: 6px 6px 0 0;
+}
+
+.toolbar-btn {
+    padding: 0.375rem 0.5rem;
+    background: none;
+    border: none;
+    border-radius: 4px;
+    color: #4b5563;
+    cursor: pointer;
+    transition: all 0.15s ease-in-out;
+}
+
+.toolbar-btn:hover {
+    background: #f3f4f6;
+    color: #1f2937;
+}
+
+.toolbar-separator {
+    width: 1px;
+    background: #e5e7eb;
+    margin: 0 0.5rem;
+}
+
+.rich-text-editor {
+    min-height: 200px;
+    padding: 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0 0 6px 6px;
+    background: #ffffff;
+    font-size: 0.875rem;
+    color: #1f2937;
+}
+
+.rich-text-editor:focus {
+    outline: none;
+    border-color: #00a6eb;
+    box-shadow: 0 0 0 3px rgba(0, 166, 235, 0.1);
+}
+
+/* Interest Tags */
+.interests-section {
+    margin-bottom: 2rem;
+}
+
+.interests-section h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #0c1c2c;
+    margin-bottom: 1.5rem;
+}
+
+.interests-section h4 {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #374151;
+    margin: 1.5rem 0 1rem;
+}
+
+.tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.625rem;
+}
+
+.tag-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.375rem 0.75rem;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    font-size: 0.8125rem;
+    color: #4b5563;
+    cursor: pointer;
+    transition: all 0.15s ease-in-out;
+    user-select: none;
+}
+
+.tag-item:hover {
+    background: #f3f4f6;
+    border-color: #d1d5db;
+}
+
+.tag-item input[type="checkbox"] {
+    margin: 0;
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    border: 1px solid #d1d5db;
+    transition: all 0.15s ease-in-out;
+}
+
+.tag-item input[type="checkbox"]:checked {
+    background-color: #00a6eb;
+    border-color: #00a6eb;
+}
+
+/* Buttons */
+.btn {
+    padding: 0.625rem 1rem;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s ease-in-out;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.btn-primary {
+    background: #00a6eb;
+    color: #ffffff;
+    border: none;
+}
+
+.btn-primary:hover {
+    background: #0095d4;
+}
+
+.btn-reset {
+    background: #ffffff;
+    border: 1px solid #d1d5db;
+    color: #4b5563;
+}
+
+.btn-reset:hover {
+    background: #f9fafb;
+    border-color: #9ca3af;
+    color: #374151;
+}
+
+.btn-outline-primary {
+    background: #ffffff;
+    border: 1px solid #00a6eb;
+    color: #00a6eb;
+}
+
+.btn-outline-primary:hover {
+    background: #f0f9ff;
+}
+
+.btn i {
+    font-size: 0.875rem;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .brand-profile-container {
+        padding: 1rem;
+    }
+
+    .profile-header {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+
+    .profile-image-upload {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .tags-container {
+        gap: 0.5rem;
+    }
+
+    .tag-item {
+        padding: 0.25rem 0.625rem;
+        font-size: 0.75rem;
+    }
+}
+
+/* DigitalOcean-specific Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.profile-section {
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* Focus States */
+.form-control:focus,
+.rich-text-editor:focus,
+.btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 166, 235, 0.1);
+}

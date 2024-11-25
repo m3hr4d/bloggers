@@ -1,94 +1,212 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container mt-4">
-    <h2>جستجوی برنامه‌های سفر</h2>
-    <form method="POST" action="{{ url_for('offers.search_plans') }}">
-        <!-- Location Field -->
-        <div class="mb-3">
-            <label for="location" class="form-label">مکان</label>
-            <div class="input-group">
-                <input type="text" class="form-control" id="location" name="location" placeholder="مکان مورد نظر را وارد کنید">
-                <span class="input-group-text" data-bs-toggle="tooltip" title="لطفاً مکانی که می‌خواهید برنامه‌های سفر مربوط به آن را ببینید وارد کنید. (مثال: تهران، اصفهان)">
-                    <i class="bi bi-question-circle"></i>
-                </span>
+<div class="container py-4">
+    <div class="search-plans-container">
+        <h2 class="mb-4">جستجوی برنامه‌های سفر</h2>
+        <form method="POST" action="{{ url_for('main.search_plans') }}" class="search-form">
+            <!-- Location Field -->
+            <div class="form-group mb-4">
+                <label for="location" class="form-label">مکان</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="location" name="location" placeholder="مکان مورد نظر را وارد کنید">
+                    <span class="input-group-text" data-bs-toggle="tooltip" title="لطفاً مکانی که می‌خواهید برنامه‌های سفر مربوط به آن را ببینید وارد کنید. (مثال: تهران، اصفهان)">
+                        <i class="bi bi-question-circle"></i>
+                    </span>
+                </div>
             </div>
-        </div>
-        <!-- Topics of Interest Field -->
-        <div class="mb-3">
-            <label for="topics" class="form-label">موضوعات مورد علاقه</label>
-            <div class="input-group">
-                <input type="text" class="form-control" id="topics" name="topics" placeholder="موضوعات مورد علاقه را وارد کنید">
-                <span class="input-group-text" data-bs-toggle="tooltip" title="موضوعاتی که به آن‌ها علاقه‌مند هستید را وارد کنید تا برنامه‌های مرتبط را ببینید. (مثال: طبیعت، فرهنگ)">
-                    <i class="bi bi-question-circle"></i>
-                </span>
+            <!-- Topics of Interest Field -->
+            <div class="form-group mb-4">
+                <label for="topics" class="form-label">موضوعات مورد علاقه</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="topics" name="topics" placeholder="موضوعات مورد علاقه را وارد کنید">
+                    <span class="input-group-text" data-bs-toggle="tooltip" title="موضوعاتی که به آن‌ها علاقه‌مند هستید را وارد کنید تا برنامه‌های مرتبط را ببینید. (مثال: طبیعت، فرهنگ)">
+                        <i class="bi bi-question-circle"></i>
+                    </span>
+                </div>
             </div>
-        </div>
-        <!-- Start Date Field -->
-        <div class="mb-3">
-            <label for="start_date" class="form-label">تاریخ شروع</label>
-            <div class="input-group">
-                <input type="date" class="form-control" id="start_date" name="start_date">
-                <span class="input-group-text" data-bs-toggle="tooltip" title="تاریخ شروع بازه زمانی که می‌خواهید برنامه‌های سفر را در آن ببینید وارد کنید.">
-                    <i class="bi bi-question-circle"></i>
-                </span>
+            <!-- Date Range Fields -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mb-4">
+                        <label for="start_date" class="form-label">تاریخ شروع</label>
+                        <div class="input-group">
+                            <input type="date" class="form-control" id="start_date" name="start_date">
+                            <span class="input-group-text" data-bs-toggle="tooltip" title="تاریخ شروع بازه زمانی که می‌خواهید برنامه‌های سفر را در آن ببینید وارد کنید.">
+                                <i class="bi bi-question-circle"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mb-4">
+                        <label for="end_date" class="form-label">تاریخ پایان</label>
+                        <div class="input-group">
+                            <input type="date" class="form-control" id="end_date" name="end_date">
+                            <span class="input-group-text" data-bs-toggle="tooltip" title="تاریخ پایان بازه زمانی که می‌خواهید برنامه‌های سفر را در آن ببینید وارد کنید.">
+                                <i class="bi bi-question-circle"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <!-- End Date Field -->
-        <div class="mb-3">
-            <label for="end_date" class="form-label">تاریخ پایان</label>
-            <div class="input-group">
-                <input type="date" class="form-control" id="end_date" name="end_date">
-                <span class="input-group-text" data-bs-toggle="tooltip" title="تاریخ پایان بازه زمانی که می‌خواهید برنامه‌های سفر را در آن ببینید وارد کنید.">
-                    <i class="bi bi-question-circle"></i>
-                </span>
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary btn-lg">جستجو</button>
             </div>
-        </div>
-        <button type="submit" class="btn btn-primary">جستجو</button>
-    </form>
+        </form>
 
-    {% if search_results %}
-        <h3 class="mt-5">نتایج جستجو</h3>
-        <div class="table-responsive">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>اینفلوئنسر</th>
-                        <th>مقصد</th>
-                        <th>موقعیت</th>
-                        <th>تاریخ شروع</th>
-                        <th>تاریخ پایان</th>
-                        <th>موضوعات مورد علاقه</th>
-                        <th>مشاهده جزئیات</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for plan in search_results %}
-                    <tr>
-                        <td>{{ plan.influencer.name }}</td>
-                        <td>{{ plan.destination }}</td>
-                        <td>{{ plan.location }}</td>
-                        <td>{{ plan.start_date }}</td>
-                        <td>{{ plan.end_date }}</td>
-                        <td>{{ plan.topics_of_interest }}</td>
-                        <td>
-                            <a href="{{ url_for('offers.view_plan', plan_id=plan.id) }}" class="btn btn-sm btn-primary">مشاهده</a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    {% elif request.method == 'POST' %}
-        <p class="mt-5">هیچ نتیجه‌ای یافت نشد.</p>
-    {% endif %}
+        {% if search_results %}
+            <div class="search-results mt-5">
+                <h3 class="mb-4">نتایج جستجو</h3>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>اینفلوئنسر</th>
+                                <th>مقصد</th>
+                                <th>موقعیت</th>
+                                <th>تاریخ شروع</th>
+                                <th>تاریخ پایان</th>
+                                <th>موضوعات مورد علاقه</th>
+                                <th>عملیات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for plan in search_results %}
+                            <tr>
+                                <td>{{ plan.influencer.name }}</td>
+                                <td>{{ plan.destination }}</td>
+                                <td>{{ plan.location }}</td>
+                                <td>{{ plan.start_date }}</td>
+                                <td>{{ plan.end_date }}</td>
+                                <td>{{ plan.topics_of_interest }}</td>
+                                <td>
+                                    <a href="{{ url_for('offers.view_plan', plan_id=plan.id) }}" class="btn btn-primary btn-sm">مشاهده</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        {% elif request.method == 'POST' %}
+            <div class="alert alert-info mt-5" role="alert">
+                <i class="bi bi-info-circle me-2"></i>
+                هیچ نتیجه‌ای یافت نشد.
+            </div>
+        {% endif %}
+    </div>
 </div>
+
+<style>
+/* Search Plans Specific Styles */
+.search-plans-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: clamp(1rem, 3vw, 2rem);
+    background: var(--background-primary);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+}
+
+.search-form {
+    padding: clamp(1rem, 3vw, 2rem);
+    background: var(--background-secondary);
+    border-radius: var(--radius-md);
+}
+
+.form-group label {
+    font-weight: var(--font-weight-medium);
+    margin-bottom: 0.5rem;
+    font-size: clamp(0.875rem, 2.5vw, 1rem);
+}
+
+.form-control {
+    height: clamp(2.5rem, 7vw, 3rem);
+    font-size: clamp(0.875rem, 2.5vw, 1rem);
+    padding: 0.5rem 1rem;
+}
+
+.input-group-text {
+    padding: 0 1rem;
+    background: var(--background-tertiary);
+    border-color: var(--border-color);
+}
+
+.input-group-text i {
+    font-size: clamp(1rem, 3vw, 1.25rem);
+    color: var(--text-secondary);
+}
+
+.btn-lg {
+    height: clamp(3rem, 8vw, 3.5rem);
+    font-size: clamp(1rem, 3vw, 1.25rem);
+}
+
+/* Table Styles */
+.table {
+    font-size: clamp(0.875rem, 2.5vw, 1rem);
+}
+
+.table th {
+    font-weight: var(--font-weight-medium);
+    background: var(--background-secondary);
+    white-space: nowrap;
+    padding: clamp(0.75rem, 2vw, 1rem);
+}
+
+.table td {
+    padding: clamp(0.75rem, 2vw, 1rem);
+    vertical-align: middle;
+}
+
+.btn-sm {
+    padding: 0.375rem 0.75rem;
+    font-size: clamp(0.75rem, 2vw, 0.875rem);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .search-plans-container {
+        padding: 1rem;
+    }
+
+    .search-form {
+        padding: 1rem;
+    }
+
+    .table {
+        font-size: 0.875rem;
+    }
+
+    .table td, .table th {
+        padding: 0.75rem;
+    }
+}
+
+/* Small Mobile Optimizations */
+@media (max-width: 375px) {
+    .search-plans-container {
+        padding: 0.75rem;
+    }
+
+    .search-form {
+        padding: 0.75rem;
+    }
+
+    .form-control {
+        font-size: 0.875rem;
+    }
+}
+</style>
 
 <!-- Include Bootstrap JS for tooltips -->
 <script>
+document.addEventListener('DOMContentLoaded', function() {
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl);
     });
+});
 </script>
 {% endblock %}

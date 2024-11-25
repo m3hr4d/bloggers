@@ -9,77 +9,123 @@
 {% block content %}
 <div class="auth-container">
     <div class="auth-box">
-        <h1>ثبت نام در بلاگرز</h1>
+        <div class="text-center mb-4">
+            <i class="fas fa-user-plus" style="font-size: 48px; color: var(--primary-color); margin-bottom: var(--space-md);"></i>
+            <h1>ثبت نام در بلاگرز</h1>
+            <p style="color: var(--text-secondary);">به جامعه بلاگرز بپیوندید</p>
+        </div>
         
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
-                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                    <div class="alert alert-{{ category }}">
+                        {% if category == 'danger' %}
+                            <i class="fas fa-exclamation-circle me-2"></i>
+                        {% elif category == 'success' %}
+                            <i class="fas fa-check-circle me-2"></i>
+                        {% endif %}
+                        {{ message }}
+                    </div>
                 {% endfor %}
             {% endif %}
         {% endwith %}
 
         <div class="user-type-selector">
             <div class="type-option" data-type="influencer">
-                <i class="bi bi-person-badge"></i>
+                <i class="fas fa-user-circle"></i>
                 <span>اینفلوئنسر</span>
+                <p class="type-description">برای اینفلوئنسرها و تولیدکنندگان محتوا</p>
             </div>
             <div class="type-option" data-type="business">
-                <i class="bi bi-shop"></i>
+                <i class="fas fa-building"></i>
                 <span>کسب و کار</span>
+                <p class="type-description">برای شرکت‌ها و کسب‌وکارها</p>
             </div>
         </div>
         
         <form method="POST" action="{{ url_for('auth.register') }}" id="influencer-form" class="register-form">
             <input type="hidden" name="user_type" value="influencer">
             <div class="form-group">
-                <label for="email" class="form-label">ایمیل</label>
-                <input type="email" name="email" id="email" class="form-control" placeholder="example@email.com" required>
+                <label for="email" class="form-label">
+                    <i class="fas fa-envelope me-2" style="color: var(--primary-color);"></i>
+                    ایمیل
+                </label>
+                <input type="email" name="email" id="email" class="form-control" placeholder="example@email.com" required autocomplete="email">
             </div>
             <div class="form-group">
-                <label for="password" class="form-label">رمز عبور</label>
-                <input type="password" name="password" id="password" class="form-control" placeholder="رمز عبور خود را وارد کنید" required>
+                <label for="password" class="form-label">
+                    <i class="fas fa-lock me-2" style="color: var(--primary-color);"></i>
+                    رمز عبور
+                </label>
+                <input type="password" name="password" id="password" class="form-control" placeholder="رمز عبور خود را وارد کنید" required autocomplete="new-password">
             </div>
             <div class="form-group">
-                <label for="name" class="form-label">نام و نام خانوادگی</label>
+                <label for="name" class="form-label">
+                    <i class="fas fa-user me-2" style="color: var(--primary-color);"></i>
+                    نام و نام خانوادگی
+                </label>
                 <input type="text" name="name" id="name" class="form-control" placeholder="نام و نام خانوادگی خود را وارد کنید" required>
             </div>
             <div class="form-group">
-                <label for="instagram" class="form-label">نام کاربری اینستاگرام</label>
+                <label for="instagram" class="form-label">
+                    <i class="fab fa-instagram me-2" style="color: var(--primary-color);"></i>
+                    نام کاربری اینستاگرام
+                </label>
                 <div class="input-group">
                     <span class="input-group-text">@</span>
                     <input type="text" name="instagram" id="instagram" class="form-control" placeholder="نام کاربری اینستاگرام">
                 </div>
             </div>
             <div class="form-group">
-                <label for="followers" class="form-label">تعداد دنبال‌کنندگان</label>
+                <label for="followers" class="form-label">
+                    <i class="fas fa-users me-2" style="color: var(--primary-color);"></i>
+                    تعداد دنبال‌کنندگان
+                </label>
                 <input type="number" name="followers" id="followers" class="form-control" placeholder="تعداد دنبال‌کنندگان">
             </div>
             <div class="d-grid">
-                <button type="submit" class="btn btn-primary">ثبت نام به عنوان اینفلوئنسر</button>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-user-plus me-2"></i>
+                    ثبت نام به عنوان اینفلوئنسر
+                </button>
             </div>
         </form>
 
         <form method="POST" action="{{ url_for('auth.register') }}" id="business-form" class="register-form" style="display: none;">
             <input type="hidden" name="user_type" value="business">
             <div class="form-group">
-                <label for="business-email" class="form-label">ایمیل شرکت</label>
-                <input type="email" name="email" id="business-email" class="form-control" placeholder="company@example.com" required>
+                <label for="business-email" class="form-label">
+                    <i class="fas fa-envelope me-2" style="color: var(--primary-color);"></i>
+                    ایمیل شرکت
+                </label>
+                <input type="email" name="email" id="business-email" class="form-control" placeholder="company@example.com" required autocomplete="email">
             </div>
             <div class="form-group">
-                <label for="business-password" class="form-label">رمز عبور</label>
-                <input type="password" name="password" id="business-password" class="form-control" placeholder="رمز عبور را وارد کنید" required>
+                <label for="business-password" class="form-label">
+                    <i class="fas fa-lock me-2" style="color: var(--primary-color);"></i>
+                    رمز عبور
+                </label>
+                <input type="password" name="password" id="business-password" class="form-control" placeholder="رمز عبور را وارد کنید" required autocomplete="new-password">
             </div>
             <div class="form-group">
-                <label for="business-name" class="form-label">نام شرکت</label>
+                <label for="business-name" class="form-label">
+                    <i class="fas fa-building me-2" style="color: var(--primary-color);"></i>
+                    نام شرکت
+                </label>
                 <input type="text" name="business_name" id="business-name" class="form-control" placeholder="نام شرکت خود را وارد کنید" required>
             </div>
             <div class="form-group">
-                <label for="website" class="form-label">وب‌سایت</label>
+                <label for="website" class="form-label">
+                    <i class="fas fa-globe me-2" style="color: var(--primary-color);"></i>
+                    وب‌سایت
+                </label>
                 <input type="url" name="website" id="website" class="form-control" placeholder="https://example.com">
             </div>
             <div class="form-group">
-                <label for="business-type" class="form-label">نوع کسب و کار</label>
+                <label for="business-type" class="form-label">
+                    <i class="fas fa-briefcase me-2" style="color: var(--primary-color);"></i>
+                    نوع کسب و کار
+                </label>
                 <select name="business_type" id="business-type" class="form-control" required>
                     <option value="" disabled selected>نوع کسب و کار خود را انتخاب کنید</option>
                     <option value="retail">خرده‌فروشی</option>
@@ -90,14 +136,21 @@
                 </select>
             </div>
             <div class="d-grid">
-                <button type="submit" class="btn btn-primary">ثبت نام به عنوان کسب و کار</button>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-building me-2"></i>
+                    ثبت نام به عنوان کسب و کار
+                </button>
             </div>
         </form>
 
-        <div class="mt-3 text-center">
-            <small>
-                حساب کاربری دارید؟ <a href="{{ url_for('auth.login') }}">وارد شوید</a>
-            </small>
+        <div class="mt-4 text-center">
+            <p style="color: var(--text-secondary);">
+                حساب کاربری دارید؟ 
+                <a href="{{ url_for('auth.login') }}" class="ms-1">
+                    وارد شوید
+                    <i class="fas fa-arrow-left ms-1"></i>
+                </a>
+            </p>
         </div>
     </div>
 </div>
@@ -119,14 +172,36 @@ document.addEventListener('DOMContentLoaded', function() {
             // Add active class to clicked option
             this.classList.add('active');
 
-            // Show/hide appropriate form
+            // Show/hide appropriate form with fade effect
             if (type === 'influencer') {
-                influencerForm.style.display = 'block';
-                businessForm.style.display = 'none';
+                businessForm.style.opacity = '0';
+                setTimeout(() => {
+                    businessForm.style.display = 'none';
+                    influencerForm.style.display = 'block';
+                    setTimeout(() => {
+                        influencerForm.style.opacity = '1';
+                    }, 50);
+                }, 300);
             } else {
-                influencerForm.style.display = 'none';
-                businessForm.style.display = 'block';
+                influencerForm.style.opacity = '0';
+                setTimeout(() => {
+                    influencerForm.style.display = 'none';
+                    businessForm.style.display = 'block';
+                    setTimeout(() => {
+                        businessForm.style.opacity = '1';
+                    }, 50);
+                }, 300);
             }
+        });
+    });
+
+    // Add animation to form submission
+    const forms = document.querySelectorAll('form');
+    forms.forEach(form => {
+        form.addEventListener('submit', function() {
+            const submitBtn = this.querySelector('button[type="submit"]');
+            submitBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin me-2"></i> در حال ثبت نام...';
+            submitBtn.disabled = true;
         });
     });
 

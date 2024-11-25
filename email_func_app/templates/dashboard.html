@@ -1,223 +1,142 @@
-{% extends "base.html" %}
+{% extends "dashboard_base.html" %}
 
 {% block title %}داشبورد - بلاگرز{% endblock %}
 
-{% block extra_css %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
-{% endblock %}
-
 {% block content %}
-<div class="dashboard-container {% if current_user.user_type == 'influencer' %}theme-influencer{% else %}theme-business{% endif %}">
-    <div class="dashboard-header">
-        <div class="container">
-            <div class="welcome-box">
-                <div class="welcome-content">
-                    <h1>
-                        {% if current_user.user_type == 'influencer' %}
-                            <i class="bi bi-person-badge"></i>
-                        {% else %}
-                            <i class="bi bi-building"></i>
-                        {% endif %}
-                        خوش آمدید، 
-                        {% if current_user.name %}
-                            {{ current_user.name }}
-                        {% elif current_user.business_name %}
-                            {{ current_user.business_name }}
-                        {% endif %}
-                    </h1>
-                    <p>به داشبورد بلاگرز خوش آمدید</p>
+<div class="dashboard-content">
+    <!-- Stats Overview -->
+    <div class="stats-overview">
+        <div class="section-header">
+            <div class="header-content">
+                <h2>خلاصه وضعیت</h2>
+                <p class="section-description">آمار و اطلاعات کلیدی شما</p>
+            </div>
+        </div>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>دنبال‌کنندگان</h3>
+                    <p>{{ followers_count|default('0', true) }}</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-calendar-check"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>برنامه‌های فعال</h3>
+                    <p>{{ active_plans|default('0', true) }}</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>پیشنهادات جدید</h3>
+                    <p>{{ new_offers|default('0', true) }}</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>نرخ تعامل</h3>
+                    <p>{{ engagement_rate|default('0.0', true) }}%</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="container py-4">
-        <div class="row g-4">
-            <!-- Quick Stats -->
-            <div class="col-12">
-                <div class="dashboard-section">
-                    <div class="row g-4">
-                        {% if current_user.user_type == 'influencer' %}
-                            <div class="col-md-3">
-                                <div class="stat-card">
-                                    <div class="stat-icon">
-                                        <i class="bi bi-people"></i>
-                                    </div>
-                                    <div class="stat-info">
-                                        <h3>دنبال‌کنندگان</h3>
-                                        <p>{{ current_user.followers|default('0', true) }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="stat-card">
-                                    <div class="stat-icon">
-                                        <i class="bi bi-calendar-check"></i>
-                                    </div>
-                                    <div class="stat-info">
-                                        <h3>برنامه‌های فعال</h3>
-                                        <p>{{ current_user.plans|length }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="stat-card">
-                                    <div class="stat-icon">
-                                        <i class="bi bi-envelope"></i>
-                                    </div>
-                                    <div class="stat-info">
-                                        <h3>پیشنهادات جدید</h3>
-                                        <p>0</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="stat-card">
-                                    <div class="stat-icon">
-                                        <i class="bi bi-graph-up"></i>
-                                    </div>
-                                    <div class="stat-info">
-                                        <h3>نرخ تعامل</h3>
-                                        <p>{{ "%.1f"|format(current_user.engagement_rate|default(0, true)) }}%</p>
-                                    </div>
-                                </div>
-                            </div>
-                        {% else %}
-                            <div class="col-md-3">
-                                <div class="stat-card">
-                                    <div class="stat-icon">
-                                        <i class="bi bi-briefcase"></i>
-                                    </div>
-                                    <div class="stat-info">
-                                        <h3>پیشنهادات ارسالی</h3>
-                                        <p>{{ current_user.offers|length }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="stat-card">
-                                    <div class="stat-icon">
-                                        <i class="bi bi-check-circle"></i>
-                                    </div>
-                                    <div class="stat-info">
-                                        <h3>پیشنهادات پذیرفته شده</h3>
-                                        <p>0</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="stat-card">
-                                    <div class="stat-icon">
-                                        <i class="bi bi-search"></i>
-                                    </div>
-                                    <div class="stat-info">
-                                        <h3>برنامه‌های مرتبط</h3>
-                                        <p>0</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="stat-card">
-                                    <div class="stat-icon">
-                                        <i class="bi bi-star"></i>
-                                    </div>
-                                    <div class="stat-info">
-                                        <h3>امتیاز</h3>
-                                        <p>5.0</p>
-                                    </div>
-                                </div>
-                            </div>
-                        {% endif %}
-                    </div>
-                </div>
+    <!-- Quick Actions -->
+    <div class="quick-actions-section">
+        <div class="section-header">
+            <div class="header-content">
+                <h2>دسترسی سریع</h2>
+                <p class="section-description">عملیات‌های پرکاربرد شما</p>
             </div>
+        </div>
 
-            <!-- Quick Actions -->
-            <div class="col-md-4">
-                <div class="dashboard-section">
-                    <div class="section-header">
-                        <h2>دسترسی سریع</h2>
-                    </div>
-                    <div class="quick-actions">
-                        {% if current_user.user_type == 'influencer' %}
-                            <a href="{{ url_for('main.create_plan') }}" class="action-card">
-                                <i class="bi bi-plus-circle"></i>
-                                <span>ایجاد برنامه جدید</span>
-                            </a>
-                            <a href="#" class="action-card">
-                                <i class="bi bi-calendar-week"></i>
-                                <span>مدیریت برنامه‌ها</span>
-                            </a>
-                            <a href="#" class="action-card">
-                                <i class="bi bi-envelope"></i>
-                                <span>پیشنهادات دریافتی</span>
-                            </a>
-                        {% else %}
-                            <a href="{{ url_for('main.search_plans') }}" class="action-card">
-                                <i class="bi bi-search"></i>
-                                <span>جستجوی برنامه‌ها</span>
-                            </a>
-                            <a href="#" class="action-card">
-                                <i class="bi bi-send"></i>
-                                <span>پیشنهادات ارسالی</span>
-                            </a>
-                            <a href="#" class="action-card">
-                                <i class="bi bi-bookmark"></i>
-                                <span>برنامه‌های ذخیره شده</span>
-                            </a>
-                        {% endif %}
-                    </div>
+        <div class="quick-actions-grid">
+            {% if current_user.user_type == 'influencer' %}
+            <a href="{{ url_for('main.create_plan') }}" class="action-card">
+                <div class="action-icon">
+                    <i class="fas fa-plus-circle"></i>
                 </div>
+                <div class="action-content">
+                    <h3>ایجاد برنامه جدید</h3>
+                    <p>برنامه‌های سفر خود را ایجاد و مدیریت کنید</p>
+                </div>
+            </a>
+            <a href="{{ url_for('main.opportunities') }}" class="action-card">
+                <div class="action-icon">
+                    <i class="fas fa-tasks"></i>
+                </div>
+                <div class="action-content">
+                    <h3>فرصت‌های همکاری</h3>
+                    <p>مشاهده و بررسی فرصت‌های همکاری جدید</p>
+                </div>
+            </a>
+            <a href="{{ url_for('main.portfolio') }}" class="action-card">
+                <div class="action-icon">
+                    <i class="fas fa-images"></i>
+                </div>
+                <div class="action-content">
+                    <h3>پورتفولیو</h3>
+                    <p>مدیریت نمونه کارها و محتواهای شما</p>
+                </div>
+            </a>
+            {% else %}
+            <a href="{{ url_for('main.search_plans') }}" class="action-card">
+                <div class="action-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="action-content">
+                    <h3>جستجوی برنامه‌ها</h3>
+                    <p>برنامه‌های سفر اینفلوئنسرها را جستجو کنید</p>
+                </div>
+            </a>
+            <a href="{{ url_for('main.campaigns') }}" class="action-card">
+                <div class="action-icon">
+                    <i class="fas fa-bullhorn"></i>
+                </div>
+                <div class="action-content">
+                    <h3>کمپین‌های من</h3>
+                    <p>مدیریت و پیگیری کمپین‌های تبلیغاتی</p>
+                </div>
+            </a>
+            <a href="{{ url_for('main.messages') }}" class="action-card">
+                <div class="action-icon">
+                    <i class="fas fa-comments"></i>
+                </div>
+                <div class="action-content">
+                    <h3>پیام‌ها</h3>
+                    <p>ارتباط با اینفلوئنسرها و مدیریت گفتگوها</p>
+                </div>
+            </a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="recent-activity-section">
+        <div class="section-header">
+            <div class="header-content">
+                <h2>فعالیت‌های اخیر</h2>
+                <p class="section-description">آخرین رویدادها و فعالیت‌های شما</p>
             </div>
-
-            <!-- Profile Overview -->
-            <div class="col-md-8">
-                <div class="dashboard-section">
-                    <div class="section-header">
-                        <h2>پروفایل شما</h2>
-                        <a href="{{ url_for('main.settings') }}" class="btn btn-outline-primary btn-sm">ویرایش</a>
-                    </div>
-                    <div class="profile-overview">
-                        {% if current_user.user_type == 'influencer' %}
-                            <div class="profile-item">
-                                <i class="bi bi-instagram"></i>
-                                <div class="item-info">
-                                    <label>پروفایل اینستاگرام</label>
-                                    <p>{{ current_user.instagram_profile|default('تنظیم نشده', true) }}</p>
-                                </div>
-                            </div>
-                            <div class="profile-item">
-                                <i class="bi bi-tag"></i>
-                                <div class="item-info">
-                                    <label>دسته‌بندی</label>
-                                    <p>{{ current_user.niche|default('تنظیم نشده', true) }}</p>
-                                </div>
-                            </div>
-                        {% else %}
-                            <div class="profile-item">
-                                <i class="bi bi-globe"></i>
-                                <div class="item-info">
-                                    <label>وب‌سایت</label>
-                                    <p>{{ current_user.business_website|default('تنظیم نشده', true) }}</p>
-                                </div>
-                            </div>
-                            <div class="profile-item">
-                                <i class="bi bi-building"></i>
-                                <div class="item-info">
-                                    <label>نوع کسب و کار</label>
-                                    <p>خدماتی</p>
-                                </div>
-                            </div>
-                        {% endif %}
-                        <div class="profile-item">
-                            <i class="bi bi-geo-alt"></i>
-                            <div class="item-info">
-                                <label>موقعیت</label>
-                                <p>{{ current_user.location|default('تنظیم نشده', true) }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        </div>
+        <div class="dashboard-card">
+            <div class="activity-list">
+                <!-- Add recent activities here -->
+                <p class="text-secondary">هنوز فعالیتی ثبت نشده است.</p>
             </div>
         </div>
     </div>

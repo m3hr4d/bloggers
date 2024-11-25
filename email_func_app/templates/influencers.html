@@ -8,78 +8,229 @@
 
 {% block content %}
 <div class="influencer-page">
-    <!-- Hero Section -->
-    <section class="hero">
+    <!-- Search Header Section -->
+    <section class="search-header">
         <div class="container">
-            <h1>همکاری با برندهای معتبر</h1>
-            <p>با بلاگرز، به راحتی با برندهای معتبر همکاری کنید و درآمد خود را افزایش دهید</p>
+            <h1>جستجوی اینفلوئنسرها</h1>
+            <p>با بهترین اینفلوئنسرها در حوزه‌های مختلف همکاری کنید</p>
             
-            <div class="hero-stats">
-                <div class="stat">
-                    <h4>+۵۰۰</h4>
-                    <p>برند فعال</p>
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" id="search-input" class="form-control" placeholder="جستجوی اینفلوئنسر...">
+                    <i class="bi bi-search"></i>
                 </div>
-                <div class="stat">
-                    <h4>+۲۰۰۰</h4>
-                    <p>همکاری موفق</p>
+                
+                <div class="filter-buttons">
+                    <button class="platform-filter" data-platform="instagram">
+                        <i class="bi bi-instagram"></i>
+                        اینستاگرام
+                    </button>
+                    <button class="platform-filter" data-platform="tiktok">
+                        <i class="bi bi-tiktok"></i>
+                        تیک‌تاک
+                    </button>
+                    <button class="platform-filter" data-platform="youtube">
+                        <i class="bi bi-youtube"></i>
+                        یوتیوب
+                    </button>
                 </div>
-                <div class="stat">
-                    <h4>+۱۰۰۰</h4>
-                    <p>اینفلوئنسر فعال</p>
+            </div>
+            
+            <div class="filter-tags">
+                <div class="category-filters">
+                    <button class="category-filter" data-category="fashion">مد و فشن</button>
+                    <button class="category-filter" data-category="lifestyle">سبک زندگی</button>
+                    <button class="category-filter" data-category="tech">تکنولوژی</button>
+                    <button class="category-filter" data-category="food">غذا و آشپزی</button>
+                    <button class="category-filter" data-category="travel">سفر و گردشگری</button>
+                    <button class="category-filter" data-category="beauty">زیبایی و آرایش</button>
+                    <button class="category-filter" data-category="sports">ورزش و تناسب اندام</button>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Features Section -->
-    <section class="features">
+    <!-- Influencers Grid Section -->
+    <section class="influencers-section">
         <div class="container">
-            <h2>مزایای همکاری با بلاگرز</h2>
-            <p>با امکانات ویژه بلاگرز، کسب و کار خود را متحول کنید</p>
-            
-            <div class="features-grid">
-                <div class="feature">
-                    <div class="icon">
-                        <i class="bi bi-graph-up"></i>
+            <div class="influencers-grid">
+                {% if influencers %}
+                    {% for influencer in influencers %}
+                    <div class="influencer-card">
+                        <div class="card-header">
+                            <img src="{{ influencer.profile_image or url_for('static', filename='images/default-profile.jpg') }}" alt="{{ influencer.name }}" class="profile-pic">
+                            <div class="influencer-info">
+                                <h3>{{ influencer.name }}</h3>
+                                <div class="location">
+                                    <i class="bi bi-geo-alt"></i>
+                                    {{ influencer.location or 'ایران' }}
+                                </div>
+                            </div>
+                            <button class="favorite-btn" title="افزودن به علاقه‌مندی‌ها">
+                                <i class="bi bi-heart"></i>
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div class="stats">
+                                <div class="stat-item">
+                                    <div class="stat-value">{{ '{:,}'.format(influencer.followers_count or 0) }}</div>
+                                    <div class="stat-label">دنبال‌کننده</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">{{ '%.1f%%'|format(influencer.engagement_rate or 0) }}</div>
+                                    <div class="stat-label">نرخ تعامل</div>
+                                </div>
+                            </div>
+                            <div class="categories">
+                                {% for category in influencer.categories or [] %}
+                                <span class="category-tag">{{ category }}</span>
+                                {% endfor %}
+                            </div>
+                            <div class="platforms">
+                                <a href="#" class="platform-link" title="اینستاگرام">
+                                    <i class="bi bi-instagram"></i>
+                                </a>
+                                <a href="#" class="platform-link" title="تیک‌تاک">
+                                    <i class="bi bi-tiktok"></i>
+                                </a>
+                                <a href="#" class="platform-link" title="یوتیوب">
+                                    <i class="bi bi-youtube"></i>
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                    <h3>افزایش درآمد</h3>
-                    <p>با همکاری با برندهای معتبر، درآمد خود را افزایش دهید</p>
-                </div>
-                
-                <div class="feature">
-                    <div class="icon">
-                        <i class="bi bi-shield-check"></i>
+                    {% endfor %}
+                {% else %}
+                    <!-- Example Cards -->
+                    <div class="influencer-card example-card">
+                        <div class="card-header">
+                            <img src="{{ url_for('static', filename='images/default-profile.jpg') }}" alt="سارا محمدی" class="profile-pic">
+                            <div class="influencer-info">
+                                <h3>سارا محمدی</h3>
+                                <div class="location">
+                                    <i class="bi bi-geo-alt"></i>
+                                    تهران
+                                </div>
+                            </div>
+                            <button class="favorite-btn" title="افزودن به علاقه‌مندی‌ها">
+                                <i class="bi bi-heart"></i>
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div class="stats">
+                                <div class="stat-item">
+                                    <div class="stat-value">۱۵۰K</div>
+                                    <div class="stat-label">دنبال‌کننده</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">۴.۲٪</div>
+                                    <div class="stat-label">نرخ تعامل</div>
+                                </div>
+                            </div>
+                            <div class="categories">
+                                <span class="category-tag">مد و فشن</span>
+                                <span class="category-tag">سبک زندگی</span>
+                                <span class="category-tag">زیبایی</span>
+                            </div>
+                            <div class="platforms">
+                                <a href="#" class="platform-link" title="اینستاگرام">
+                                    <i class="bi bi-instagram"></i>
+                                </a>
+                                <a href="#" class="platform-link" title="تیک‌تاک">
+                                    <i class="bi bi-tiktok"></i>
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                    <h3>همکاری امن</h3>
-                    <p>با خیال راحت و بدون نگرانی همکاری کنید</p>
-                </div>
-                
-                <div class="feature">
-                    <div class="icon">
-                        <i class="bi bi-people"></i>
-                    </div>
-                    <h3>شبکه گسترده</h3>
-                    <p>به شبکه بزرگی از برندها دسترسی داشته باشید</p>
-                </div>
-                
-                <div class="feature">
-                    <div class="icon">
-                        <i class="bi bi-lightning"></i>
-                    </div>
-                    <h3>رشد سریع</h3>
-                    <p>با همکاری‌های متنوع، سریع‌تر رشد کنید</p>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- CTA Section -->
-    <section class="cta">
-        <div class="container">
-            <h2>همین حالا شروع کنید</h2>
-            <p>به جمع هزاران اینفلوئنسر موفق در بلاگرز بپیوندید</p>
-            <a href="#" class="btn btn-primary">ثبت نام اینفلوئنسر</a>
+                    <div class="influencer-card example-card">
+                        <div class="card-header">
+                            <img src="{{ url_for('static', filename='images/default-profile.jpg') }}" alt="علی رضایی" class="profile-pic">
+                            <div class="influencer-info">
+                                <h3>علی رضایی</h3>
+                                <div class="location">
+                                    <i class="bi bi-geo-alt"></i>
+                                    اصفهان
+                                </div>
+                            </div>
+                            <button class="favorite-btn" title="افزودن به علاقه‌مندی‌ها">
+                                <i class="bi bi-heart"></i>
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div class="stats">
+                                <div class="stat-item">
+                                    <div class="stat-value">۲۵۰K</div>
+                                    <div class="stat-label">دنبال‌کننده</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">۳.۸٪</div>
+                                    <div class="stat-label">نرخ تعامل</div>
+                                </div>
+                            </div>
+                            <div class="categories">
+                                <span class="category-tag">تکنولوژی</span>
+                                <span class="category-tag">گیمینگ</span>
+                                <span class="category-tag">گجت</span>
+                            </div>
+                            <div class="platforms">
+                                <a href="#" class="platform-link" title="یوتیوب">
+                                    <i class="bi bi-youtube"></i>
+                                </a>
+                                <a href="#" class="platform-link" title="اینستاگرام">
+                                    <i class="bi bi-instagram"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="influencer-card example-card">
+                        <div class="card-header">
+                            <img src="{{ url_for('static', filename='images/default-profile.jpg') }}" alt="مریم حسینی" class="profile-pic">
+                            <div class="influencer-info">
+                                <h3>مریم حسینی</h3>
+                                <div class="location">
+                                    <i class="bi bi-geo-alt"></i>
+                                    شیراز
+                                </div>
+                            </div>
+                            <button class="favorite-btn" title="افزودن به علاقه‌مندی‌ها">
+                                <i class="bi bi-heart"></i>
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div class="stats">
+                                <div class="stat-item">
+                                    <div class="stat-value">۱۸۰K</div>
+                                    <div class="stat-label">دنبال‌کننده</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">۵.۱٪</div>
+                                    <div class="stat-label">نرخ تعامل</div>
+                                </div>
+                            </div>
+                            <div class="categories">
+                                <span class="category-tag">غذا و آشپزی</span>
+                                <span class="category-tag">سبک زندگی</span>
+                                <span class="category-tag">سلامت</span>
+                            </div>
+                            <div class="platforms">
+                                <a href="#" class="platform-link" title="اینستاگرام">
+                                    <i class="bi bi-instagram"></i>
+                                </a>
+                                <a href="#" class="platform-link" title="یوتیوب">
+                                    <i class="bi bi-youtube"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
         </div>
     </section>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/pages/influencers.js') }}"></script>
 {% endblock %}

@@ -1,0 +1,280 @@
+/* Base Dashboard Layout */
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+    background: #f8f9fc;
+    font-family: 'BYekan', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+.main-content {
+    flex: 1;
+    margin-right: 240px;
+    padding: 0;
+    min-width: 0;
+    transition: margin-right 0.3s ease;
+}
+
+/* Top Navigation */
+.top-nav {
+    background: white;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #e5e7eb;
+    height: 64px;
+    position: sticky;
+    top: 0;
+    z-index: 40;
+}
+
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #4b5563;
+    font-size: 14px;
+    padding: 0;
+    margin: 0;
+    background: none;
+}
+
+.breadcrumb-item {
+    color: #4b5563;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: color 0.2s ease;
+}
+
+.breadcrumb-item:hover {
+    color: #1f2937;
+}
+
+.breadcrumb-item i {
+    font-size: 16px;
+}
+
+.breadcrumb-item.active {
+    color: #111827;
+    font-weight: 500;
+}
+
+/* User Menu */
+.user-menu {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+}
+
+.user-name {
+    color: #111827;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.user-type {
+    color: #6b7280;
+    font-size: 12px;
+}
+
+.user-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.user-action-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #6b7280;
+    text-decoration: none;
+    font-size: 14px;
+    padding: 8px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.user-action-btn:hover {
+    color: #111827;
+    background: #f3f4f6;
+}
+
+.user-action-btn i {
+    font-size: 16px;
+}
+
+.user-action-btn.signout {
+    color: #dc2626;
+}
+
+.user-action-btn.signout:hover {
+    background: #fef2f2;
+}
+
+.divider-vertical {
+    width: 1px;
+    height: 24px;
+    background: #e5e7eb;
+    margin: 0;
+}
+
+/* Content Wrapper */
+.content-wrapper {
+    padding: 24px;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+/* Section Cards */
+.section-card {
+    background: white;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    margin-bottom: 24px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.2s ease;
+}
+
+.section-card:hover {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.section-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.section-header h2 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 0 0 4px 0;
+}
+
+.section-description {
+    font-size: 14px;
+    color: #6b7280;
+    margin: 0;
+}
+
+.section-content {
+    padding: 24px;
+}
+
+/* RTL Support */
+[dir="rtl"] .main-content {
+    margin-right: 240px;
+    margin-left: 0;
+}
+
+[dir="rtl"] .breadcrumb i {
+    transform: scaleX(-1);
+}
+
+[dir="rtl"] .user-menu {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .user-info {
+    align-items: flex-start;
+}
+
+[dir="rtl"] .user-actions {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .user-action-btn {
+    flex-direction: row-reverse;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .main-content {
+        margin-right: 200px;
+    }
+
+    [dir="rtl"] .main-content {
+        margin-right: 200px;
+        margin-left: 0;
+    }
+
+    .top-nav {
+        padding: 0 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        margin-right: 0;
+    }
+
+    [dir="rtl"] .main-content {
+        margin-right: 0;
+        margin-left: 0;
+    }
+
+    .top-nav {
+        padding: 0 16px;
+        height: auto;
+        min-height: 64px;
+        flex-direction: column;
+        align-items: flex-start;
+        padding-top: 12px;
+        padding-bottom: 12px;
+    }
+
+    .user-menu {
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .user-info {
+        width: 100%;
+    }
+
+    .user-actions {
+        width: 100%;
+        justify-content: flex-end;
+    }
+
+    .content-wrapper {
+        padding: 16px;
+    }
+
+    .section-header {
+        padding: 16px;
+    }
+
+    .section-content {
+        padding: 16px;
+    }
+}
+
+/* Utility Classes */
+.text-right {
+    text-align: right;
+}
+
+.text-left {
+    text-align: left;
+}
+
+[dir="rtl"] .text-right {
+    text-align: left;
+}
+
+[dir="rtl"] .text-left {
+    text-align: right;
+}

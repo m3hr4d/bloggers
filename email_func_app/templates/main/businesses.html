@@ -1,0 +1,49 @@
+{% extends "dashboard_base.html" %}
+
+{% block title %}Businesses{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-8">Businesses</h1>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for business in businesses %}
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <div class="flex items-center mb-4">
+                {% if business.profile_image %}
+                <img src="{{ business.profile_image }}" alt="{{ business.business_name }}" class="w-16 h-16 rounded-full object-cover">
+                {% else %}
+                <div class="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center">
+                    <span class="text-2xl text-gray-500">{{ business.business_name[:1] }}</span>
+                </div>
+                {% endif %}
+                <div class="ml-4">
+                    <h2 class="text-xl font-semibold">{{ business.business_name }}</h2>
+                    <p class="text-gray-600">{{ business.industry }}</p>
+                </div>
+            </div>
+            
+            <div class="mb-4">
+                <p class="text-gray-700">{{ business.bio[:150] }}...</p>
+            </div>
+            
+            <div class="mb-4">
+                <p class="text-sm text-gray-600"><strong>Business Type:</strong> {{ business.business_type }}</p>
+                <p class="text-sm text-gray-600"><strong>Experience:</strong> {{ business.experience_level }}</p>
+                <p class="text-sm text-gray-600"><strong>Budget:</strong> {{ business.annual_budget }}</p>
+            </div>
+            
+            <div class="flex justify-between items-center">
+                <a href="{{ url_for('main.profile', user_id=business.id) }}" 
+                   class="text-blue-600 hover:text-blue-800">View Profile</a>
+                {% if current_user.is_influencer() %}
+                <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                    Contact
+                </button>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
