@@ -3,10 +3,11 @@ Description=Bloggers Web Application
 After=network.target
 
 [Service]
-User=root
-WorkingDirectory=/root/bloggers
-Environment="PATH=/root/bloggers/venv/bin"
-ExecStart=/root/bloggers/venv/bin/gunicorn -c gunicorn.conf.py run:app
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/bloggers
+Environment="PATH=/var/www/bloggers/venv/bin"
+ExecStart=/var/www/bloggers/venv/bin/gunicorn -c gunicorn.conf.py run:app
 Restart=always
 
 [Install]
